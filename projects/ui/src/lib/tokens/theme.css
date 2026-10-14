@@ -1,0 +1,118 @@
+@custom-variant dark {
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:not([data-theme='light'], [data-theme='light'] *)) {
+      @slot;
+    }
+  }
+}
+
+/* inline: utilities read the runtime --skit-* variable, so presets, modes and token bridges apply per element. */
+@theme inline {
+  --color-*: initial;
+  --color-white: var(--skit-white);
+
+  --color-primary-50: var(--skit-primary-50);
+  --color-primary-100: var(--skit-primary-100);
+  --color-primary-200: var(--skit-primary-200);
+  --color-primary-300: var(--skit-primary-300);
+  --color-primary-400: var(--skit-primary-400);
+  --color-primary-500: var(--skit-primary-500);
+  --color-primary-600: var(--skit-primary-600);
+  --color-primary-700: var(--skit-primary-700);
+  --color-primary-800: var(--skit-primary-800);
+  --color-primary-900: var(--skit-primary-900);
+  --color-primary-950: var(--skit-primary-950);
+
+  --color-neutral-50: var(--skit-neutral-50);
+  --color-neutral-100: var(--skit-neutral-100);
+  --color-neutral-200: var(--skit-neutral-200);
+  --color-neutral-300: var(--skit-neutral-300);
+  --color-neutral-400: var(--skit-neutral-400);
+  --color-neutral-500: var(--skit-neutral-500);
+  --color-neutral-600: var(--skit-neutral-600);
+  --color-neutral-700: var(--skit-neutral-700);
+  --color-neutral-800: var(--skit-neutral-800);
+  --color-neutral-900: var(--skit-neutral-900);
+  --color-neutral-950: var(--skit-neutral-950);
+
+  --color-background: var(--skit-background);
+  --color-surface: var(--skit-surface);
+  --color-border: var(--skit-border);
+  --color-border-strong: var(--skit-border-strong);
+  --color-text-primary: var(--skit-text-primary);
+  --color-text-muted: var(--skit-text-muted);
+  --color-link: var(--skit-link);
+  --color-focus-ring: var(--skit-focus-ring-color);
+  --color-tint-bg: var(--skit-tint-bg);
+  --color-tint-text: var(--skit-tint-text);
+
+  --color-success: var(--skit-success-solid);
+  --color-success-bg: var(--skit-success-bg);
+  --color-success-border: var(--skit-success-border);
+  --color-success-text: var(--skit-success-text);
+  --color-warning: var(--skit-warning-solid);
+  --color-warning-bg: var(--skit-warning-bg);
+  --color-warning-border: var(--skit-warning-border);
+  --color-warning-text: var(--skit-warning-text);
+  --color-danger: var(--skit-danger-solid);
+  --color-danger-bg: var(--skit-danger-bg);
+  --color-danger-border: var(--skit-danger-border);
+  --color-danger-text: var(--skit-danger-text);
+  --color-info: var(--skit-info-solid);
+  --color-info-bg: var(--skit-info-bg);
+  --color-info-border: var(--skit-info-border);
+  --color-info-text: var(--skit-info-text);
+}
+
+/* static: always emitted, because base.css and consumers read these variables directly. */
+@theme static {
+  --font-*: initial;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --default-font-family: var(--skit-font-sans);
+  --default-font-feature-settings: normal;
+
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+
+  --font-weight-*: initial;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --spacing: 0.25rem;
+
+  --radius-*: initial;
+  --radius-none: 0;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+
+  --ease-*: initial;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: var(--skit-duration-fast);
+  --default-transition-timing-function: var(--skit-easing);
+}

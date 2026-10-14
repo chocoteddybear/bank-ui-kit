@@ -1,0 +1,25 @@
+:root {
+  --skit-duration-fast: 120ms;
+  --skit-duration-base: 200ms;
+  --skit-duration-slow: 320ms;
+  --skit-easing: cubic-bezier(0.2, 0, 0, 1);
+
+  --skit-focus-ring-width: 2px;
+  --skit-focus-ring-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --skit-duration-fast: 0ms;
+    --skit-duration-base: 0ms;
+    --skit-duration-slow: 0ms;
+  }
+}
+
+/* Outline + offset leaves a transparent gap, so the page background shows between element and ring. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: var(--skit-focus-ring-width) solid var(--skit-focus-ring-color);
+    outline-offset: var(--skit-focus-ring-offset);
+  }
+}

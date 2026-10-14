@@ -1,0 +1,16 @@
+{
+  "name": "@skit/ui",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@fontsource/inter": "^5.3.0",
+    "tailwindcss": "^4.3.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}

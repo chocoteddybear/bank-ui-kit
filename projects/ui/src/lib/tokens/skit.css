@@ -1,0 +1,13 @@
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme) prefix(skit);
+/* Preflight sits in a sub-layer of base so the zero-specificity kit base styles (base.css) still beat it. */
+@import 'tailwindcss/preflight.css' layer(base.preflight);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@import './fonts.css';
+@import './colors.css';
+@import './theme.css';
+@import './typography.css';
+@import './interaction.css';
+@import './base.css';

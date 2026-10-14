@@ -1,0 +1,53 @@
+@utility text-display {
+  font-size: --theme(--text-4xl);
+  line-height: --theme(--text-4xl--line-height);
+  font-weight: --theme(--font-weight-semibold);
+}
+
+@utility text-heading-lg {
+  font-size: --theme(--text-3xl);
+  line-height: --theme(--text-3xl--line-height);
+  font-weight: --theme(--font-weight-semibold);
+}
+
+@utility text-heading {
+  font-size: --theme(--text-2xl);
+  line-height: --theme(--text-2xl--line-height);
+  font-weight: --theme(--font-weight-semibold);
+}
+
+@utility text-title {
+  font-size: --theme(--text-xl);
+  line-height: --theme(--text-xl--line-height);
+  font-weight: --theme(--font-weight-medium);
+}
+
+@utility text-subtitle {
+  font-size: --theme(--text-lg);
+  line-height: --theme(--text-lg--line-height);
+  font-weight: --theme(--font-weight-medium);
+}
+
+@utility text-body {
+  font-size: --theme(--text-base);
+  line-height: --theme(--text-base--line-height);
+  font-weight: --theme(--font-weight-regular);
+}
+
+@utility text-body-sm {
+  font-size: --theme(--text-sm);
+  line-height: --theme(--text-sm--line-height);
+  font-weight: --theme(--font-weight-regular);
+}
+
+@utility text-label {
+  font-size: --theme(--text-sm);
+  line-height: --theme(--text-sm--line-height);
+  font-weight: --theme(--font-weight-medium);
+}
+
+@utility text-caption {
+  font-size: --theme(--text-xs);
+  line-height: --theme(--text-xs--line-height);
+  font-weight: --theme(--font-weight-regular);
+}

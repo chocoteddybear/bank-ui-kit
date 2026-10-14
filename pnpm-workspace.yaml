@@ -1,0 +1,9 @@
+packages:
+  - projects/*
+
+minimumReleaseAgeExclude:
+  - eslint-plugin-better-tailwindcss@4.9.1
+
+# Optional peer of @analogjs/vite-plugin-angular; we build with @angular/build, so keep the deprecated webpack toolchain out.
+overrides:
+  '@angular-devkit/build-angular': '-'
