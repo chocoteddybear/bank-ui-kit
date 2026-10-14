@@ -1,9 +1,9 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
 # Compiled output
-/dist
+dist/
 /tmp
-/out-tsc
+out-tsc/
 /bazel-out
 
 # Node
@@ -30,7 +30,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
+.angular/
 .sass-cache/
 /connect.lock
 /coverage
@@ -45,3 +45,6 @@ Thumbs.db
 
 *storybook.log
 storybook-static
+
+# Demo app is local-only (shown from this machine, not published)
+apps/demo/

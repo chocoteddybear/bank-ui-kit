@@ -8,7 +8,7 @@ const storybook = require('eslint-plugin-storybook');
 
 module.exports = defineConfig([
   {
-    ignores: ['dist/**', '.angular/**', 'out-tsc/**'],
+    ignores: ['dist/**', '.angular/**', 'out-tsc/**', 'storybook-static/**'],
   },
   {
     files: ['**/*.ts'],
@@ -43,7 +43,7 @@ module.exports = defineConfig([
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     plugins: { 'better-tailwindcss': betterTailwind },
     settings: {
-      'better-tailwindcss': { entryPoint: 'projects/ui/src/lib/tokens/skit.css' },
+      'better-tailwindcss': { entryPoint: 'src/lib/tokens/skit.css' },
     },
     rules: {
       ...betterTailwind.configs['correctness-error'].rules,

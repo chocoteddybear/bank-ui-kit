@@ -5,11 +5,14 @@ Angular UI kit for banking and financial apps, shown in a Storybook showroom. Po
 ## Stack
 - Angular 22+ (standalone components, signals, `input()` / `output()` / `model()`)
 - Storybook, Tailwind CSS v4 (CSS-first config), pnpm
-- pnpm monorepo: `projects/ui` (library) and `projects/demo` (app)
+- pnpm workspace with two independent packages, not one Angular workspace:
+  - `packages/ui`: the library, published as an npm package. Own `package.json` and Angular config. Storybook lives here.
+  - `apps/demo`: a separate Angular app with its own `package.json` and `angular.json`. It consumes the library exactly like an external company app would: it depends on the built package (`workspace:*` link to the ng-packagr output) and imports only from the package name. No tsconfig path aliases to library source, no shared `angular.json`.
+  - Switching the demo to the published npm version must be a one-line dependency change.
 
 ## Conventions
 - Prefix: `skit` everywhere. Components `<skit-...>`, directives `skit...` (camelCase), CSS variables `--skit-...`, root class `.skit-root`, Tailwind prefix `skit:` (`@import "tailwindcss" prefix(skit);`). Demo app uses `app-`.
-- Folders under `projects/ui/src/lib/`: `tokens`, `atoms`, `molecules`, `organisms`, `templates`. Dependencies only point downward.
+- Folders under `packages/ui/src/lib/`: `tokens`, `atoms`, `molecules`, `organisms`, `templates`. Dependencies only point downward.
 - Pages live in the demo app, not the library.
 - One folder per component: component, story, spec.
 - Components use role tokens only (`primary-600`, `surface`, `text-muted`), never raw colors.
