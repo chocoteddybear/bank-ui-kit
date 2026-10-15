@@ -1,7 +1,21 @@
-@layer base {
+/*
+ * Kit styles for plain tags. Nothing here applies outside .skit-root, so loading the kit never changes the host app.
+ * Layer `components` (not `base`): it sits above any Tailwind reset the host app ships in `base`,
+ * but below utilities and below all unlayered app CSS. :where() keeps specificity at zero.
+ */
+@layer components {
+  :where(.skit-root, .skit-root *, .skit-root ::before, .skit-root ::after) {
+    box-sizing: border-box;
+    border-color: var(--skit-border);
+  }
+
+  :where(.skit-root, [data-theme='light'], [data-theme='dark']) {
+    color-scheme: var(--skit-color-scheme);
+  }
+
   :where(.skit-root) {
     background-color: var(--skit-root-background, var(--skit-background));
-    color: var(--skit-root-color, var(--skit-text-primary));
+    color: var(--skit-root-color, var(--skit-text-default));
     font-family: var(--skit-root-font-family, var(--skit-font-sans));
     font-size: var(--skit-body-size, var(--skit-text-base));
     line-height: var(--skit-body-line-height, var(--skit-text-base--line-height));

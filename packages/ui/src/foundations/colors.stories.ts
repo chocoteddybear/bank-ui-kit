@@ -15,16 +15,16 @@ const TONES = ['success', 'warning', 'danger', 'info'];
 const TONE_SLOTS = ['bg', 'border', 'solid', 'text'];
 
 const ROLES = [
-  { name: 'background', usage: 'Page' },
-  { name: 'surface', usage: 'Cards, dropdowns, popovers' },
-  { name: 'border', usage: 'Cards, inputs, dropdowns' },
-  { name: 'border-strong', usage: 'Outline buttons' },
-  { name: 'text-primary', usage: 'Body text, amounts' },
-  { name: 'text-muted', usage: 'Secondary text' },
-  { name: 'link', usage: 'Links' },
-  { name: 'focus-ring-color', usage: 'Keyboard focus ring' },
-  { name: 'tint-bg', usage: 'Tinted badge / alert background' },
-  { name: 'tint-text', usage: 'Tinted badge / alert text' },
+  { name: 'background', cls: 'skit:bg-background', usage: 'Page' },
+  { name: 'surface', cls: 'skit:bg-surface', usage: 'Cards, dropdowns, popovers' },
+  { name: 'border', cls: 'skit:border', usage: 'Cards, inputs, dropdowns' },
+  { name: 'border-strong', cls: 'skit:border-strong', usage: 'Outline buttons' },
+  { name: 'text-default', cls: 'skit:text-default', usage: 'Body text, amounts' },
+  { name: 'text-muted', cls: 'skit:text-muted', usage: 'Secondary text' },
+  { name: 'link', cls: 'skit:text-link', usage: 'Links' },
+  { name: 'focus-ring-color', cls: 'skit:focus-ring', usage: 'Keyboard focus ring' },
+  { name: 'tint-bg', cls: 'skit:bg-tint', usage: 'Tinted badge / alert background' },
+  { name: 'tint-text', cls: 'skit:text-tint', usage: 'Tinted badge / alert text' },
 ];
 
 const meta: Meta = {
@@ -47,10 +47,10 @@ export const Scales: Story = {
           @for (step of steps; track step) {
             <div>
               <div
-                class="skit:h-12 skit:rounded-sm skit:border skit:border-border"
+                class="skit:h-12 skit:rounded-sm skit:border"
                 [style.background]="'var(--skit-' + scale.name + '-' + step + ')'"
               ></div>
-              <small class="skit:text-text-muted">{{ step }}</small>
+              <small class="skit:text-muted">{{ step }}</small>
             </div>
           }
         </div>
@@ -69,10 +69,10 @@ export const Semantic: Story = {
           @for (slot of toneSlots; track slot) {
             <div>
               <div
-                class="skit:h-12 skit:rounded-sm skit:border skit:border-border"
+                class="skit:h-12 skit:rounded-sm skit:border"
                 [style.background]="'var(--skit-' + tone + '-' + slot + ')'"
               ></div>
-              <small class="skit:text-text-muted">{{ slot }}</small>
+              <small class="skit:text-muted">{{ slot }}</small>
             </div>
           }
         </div>
@@ -95,18 +95,19 @@ export const Roles: Story = {
     template: inBothModes(`
       <table>
         <thead>
-          <tr><th>Swatch</th><th>Role</th><th>Usage</th></tr>
+          <tr><th>Swatch</th><th>Variable</th><th>Class</th><th>Usage</th></tr>
         </thead>
         <tbody>
           @for (role of roles; track role.name) {
             <tr>
               <td>
                 <div
-                  class="skit:size-10 skit:rounded-sm skit:border skit:border-border"
+                  class="skit:size-10 skit:rounded-sm skit:border"
                   [style.background]="'var(--skit-' + role.name + ')'"
                 ></div>
               </td>
               <td><code>--skit-{{ role.name }}</code></td>
+              <td><code>{{ role.cls }}</code></td>
               <td>{{ role.usage }}</td>
             </tr>
           }
@@ -114,10 +115,10 @@ export const Roles: Story = {
       </table>
 
       <h3 class="skit:mt-8">In use</h3>
-      <div class="skit:rounded-lg skit:border skit:border-border skit:bg-surface skit:p-6">
+      <div class="skit:rounded-lg skit:border skit:bg-surface skit:p-6">
         <p class="skit:text-title">Surface card</p>
-        <p class="skit:text-text-muted">Muted text on surface, with a <a href="#">link</a>.</p>
-        <span class="skit:rounded-full skit:bg-tint-bg skit:px-3 skit:py-1 skit:text-label skit:text-tint-text">Tinted badge</span>
+        <p class="skit:text-muted">Muted text on surface, with a <a href="#">link</a>.</p>
+        <span class="skit:rounded-full skit:bg-tint skit:px-3 skit:py-1 skit:text-label skit:text-tint">Tinted badge</span>
         <span class="skit:ml-2 skit:rounded-full skit:bg-primary-600 skit:px-4 skit:py-2 skit:text-label skit:text-white">Primary button</span>
       </div>
     `),

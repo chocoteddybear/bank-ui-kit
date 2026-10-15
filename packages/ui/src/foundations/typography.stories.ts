@@ -28,9 +28,9 @@ export const Variants: Story = {
     ...meta.render!(args, context),
     template: inBothModes(`
       @for (v of variants; track v.name) {
-        <div class="skit:mb-6 skit:border-b skit:border-border skit:pb-4">
+        <div class="skit:mb-6 skit:border-b skit:pb-4">
           <div [class]="v.cls">Available balance</div>
-          <small class="skit:text-text-muted"><code>{{ v.cls }}</code> · {{ v.spec }}</small>
+          <small class="skit:text-muted"><code>{{ v.cls }}</code> · {{ v.spec }}</small>
         </div>
       }
     `),
@@ -43,7 +43,7 @@ export const Scale: Story = {
     template: inBothModes(`
       @for (size of scale; track size) {
         <div class="skit:mb-3 skit:flex skit:items-baseline skit:gap-4">
-          <small class="skit:w-12 skit:text-text-muted">{{ size }}</small>
+          <small class="skit:w-12 skit:text-muted">{{ size }}</small>
           <span
             [style.font-size]="'var(--skit-text-' + size + ')'"
             [style.line-height]="'var(--skit-text-' + size + '--line-height)'"

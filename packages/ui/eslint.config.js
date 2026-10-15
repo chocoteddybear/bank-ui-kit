@@ -43,7 +43,7 @@ module.exports = defineConfig([
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     plugins: { 'better-tailwindcss': betterTailwind },
     settings: {
-      'better-tailwindcss': { entryPoint: 'src/lib/tokens/skit.css' },
+      'better-tailwindcss': { entryPoint: '.storybook/storybook.css' },
     },
     rules: {
       ...betterTailwind.configs['correctness-error'].rules,

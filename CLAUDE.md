@@ -34,7 +34,7 @@ Angular UI kit for banking and financial apps, shown in a Storybook showroom. Po
 ## Styling approach for plain HTML
 - Plain tags (`h1`-`h6`, `p`, `a`, lists, `hr`, `table`) are styled by default; no classes needed.
 - These styles are deliberately weak:
-  - placed in Tailwind's `@layer base`, so any Tailwind class wins without `!important`
+  - placed in the `components` cascade layer: above any Tailwind reset (`@layer base`), below utilities, so any Tailwind class wins without `!important`
   - wrapped in `:where()`, so specificity is zero and any app CSS wins
   - scoped to `.skit-root`, so nothing outside it changes
 - Each tag reads CSS variables with defaults, e.g. `font-size: var(--skit-h2-size, var(--text-2xl))`.
@@ -85,7 +85,7 @@ Semantic, dark (bg / border / text; solid unchanged):
 | `background` (page) | neutral-50 | neutral-950 |
 | `surface` (cards) | white | neutral-900 |
 | `border` | neutral-200 | neutral-800 |
-| `text-primary` | neutral-900 | neutral-50 |
+| `text-default` | neutral-900 | neutral-50 |
 | `text-muted` | neutral-500 | neutral-400 |
 | Primary button | primary-600, white text | primary-600, white text |
 | Links, focus ring | primary-600 / primary-500 | primary-400 |
@@ -95,7 +95,7 @@ Semantic, dark (bg / border / text; solid unchanged):
 - Dark depth: raised surfaces are lighter than the page. Still no shadows.
 
 ### Money amounts
-No red or green. Deposits and purchases both use `text-primary`; direction is shown by the sign (`+$3,200.00`, `-$84.20`). Red is reserved for real problems (errors, overdrafts). The `Amount` atom always shows the sign and uses tabular numerals.
+No red or green. Deposits and purchases both use `text-default`; direction is shown by the sign (`+$3,200.00`, `-$84.20`). Red is reserved for real problems (errors, overdrafts). The `Amount` atom always shows the sign and uses tabular numerals.
 
 ## Typography
 - Inter only (self-hosted, weights 400 / 500 / 600), tabular numerals on amounts.

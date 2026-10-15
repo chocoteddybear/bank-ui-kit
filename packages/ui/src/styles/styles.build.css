@@ -1,0 +1,10 @@
+/* Build-only entry for dist/styles.css: the precompiled kit CSS for apps without Tailwind v4.
+   Sources: components under src/lib (scan base set in scripts/build-css.mjs) plus the public classes below. */
+@import '../lib/tokens/tailwind.css';
+
+@source inline('skit:text-{display,heading-lg,heading,title,subtitle,body,body-sm,label,caption}');
+@source inline('skit:text-{default,muted,link,tint,success,warning,danger,info}');
+@source inline('skit:bg-{background,surface,tint,success,warning,danger,info}');
+@source inline('skit:bg-{success,warning,danger,info}-solid');
+@source inline('skit:border skit:border-{strong,success,warning,danger,info}');
+@source inline('skit:tabular-nums skit:focus-ring');

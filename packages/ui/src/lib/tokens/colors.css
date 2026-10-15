@@ -105,13 +105,13 @@
  */
 :root,
 [data-theme='light'] {
-  color-scheme: light;
+  --skit-color-scheme: light;
 
   --skit-background: var(--skit-neutral-50);
   --skit-surface: var(--skit-white);
   --skit-border: var(--skit-neutral-200);
   --skit-border-strong: var(--skit-neutral-900);
-  --skit-text-primary: var(--skit-neutral-900);
+  --skit-text-default: var(--skit-neutral-900);
   --skit-text-muted: var(--skit-neutral-500);
   --skit-link: var(--skit-primary-600);
   --skit-focus-ring-color: var(--skit-primary-500);
@@ -134,13 +134,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    color-scheme: dark;
+    --skit-color-scheme: dark;
 
     --skit-background: var(--skit-neutral-950);
     --skit-surface: var(--skit-neutral-900);
     --skit-border: var(--skit-neutral-800);
     --skit-border-strong: var(--skit-neutral-50);
-    --skit-text-primary: var(--skit-neutral-50);
+    --skit-text-default: var(--skit-neutral-50);
     --skit-text-muted: var(--skit-neutral-400);
     --skit-link: var(--skit-primary-400);
     --skit-focus-ring-color: var(--skit-primary-400);
@@ -163,13 +163,13 @@
 }
 
 [data-theme='dark'] {
-  color-scheme: dark;
+  --skit-color-scheme: dark;
 
   --skit-background: var(--skit-neutral-950);
   --skit-surface: var(--skit-neutral-900);
   --skit-border: var(--skit-neutral-800);
   --skit-border-strong: var(--skit-neutral-50);
-  --skit-text-primary: var(--skit-neutral-50);
+  --skit-text-default: var(--skit-neutral-50);
   --skit-text-muted: var(--skit-neutral-400);
   --skit-link: var(--skit-primary-400);
   --skit-focus-ring-color: var(--skit-primary-400);

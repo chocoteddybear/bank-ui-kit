@@ -1,0 +1,15 @@
+/*
+ * Tailwind v4 entry for the kit. Generates only `skit:`-prefixed utilities and ships no global reset,
+ * so it is safe next to an app's own Tailwind, Bootstrap or plain CSS.
+ * Load it as its own stylesheet entry, not inside the app's Tailwind entry: its theme clears Tailwind defaults.
+ */
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme) prefix(skit);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@import './colors.css';
+@import './theme.css';
+@import './typography.css';
+@import './interaction.css';
+@import './base.css';

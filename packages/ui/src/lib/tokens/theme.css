@@ -9,64 +9,6 @@
   }
 }
 
-/* inline: utilities read the runtime --skit-* variable, so presets, modes and token bridges apply per element. */
-@theme inline {
-  --color-*: initial;
-  --color-white: var(--skit-white);
-
-  --color-primary-50: var(--skit-primary-50);
-  --color-primary-100: var(--skit-primary-100);
-  --color-primary-200: var(--skit-primary-200);
-  --color-primary-300: var(--skit-primary-300);
-  --color-primary-400: var(--skit-primary-400);
-  --color-primary-500: var(--skit-primary-500);
-  --color-primary-600: var(--skit-primary-600);
-  --color-primary-700: var(--skit-primary-700);
-  --color-primary-800: var(--skit-primary-800);
-  --color-primary-900: var(--skit-primary-900);
-  --color-primary-950: var(--skit-primary-950);
-
-  --color-neutral-50: var(--skit-neutral-50);
-  --color-neutral-100: var(--skit-neutral-100);
-  --color-neutral-200: var(--skit-neutral-200);
-  --color-neutral-300: var(--skit-neutral-300);
-  --color-neutral-400: var(--skit-neutral-400);
-  --color-neutral-500: var(--skit-neutral-500);
-  --color-neutral-600: var(--skit-neutral-600);
-  --color-neutral-700: var(--skit-neutral-700);
-  --color-neutral-800: var(--skit-neutral-800);
-  --color-neutral-900: var(--skit-neutral-900);
-  --color-neutral-950: var(--skit-neutral-950);
-
-  --color-background: var(--skit-background);
-  --color-surface: var(--skit-surface);
-  --color-border: var(--skit-border);
-  --color-border-strong: var(--skit-border-strong);
-  --color-text-primary: var(--skit-text-primary);
-  --color-text-muted: var(--skit-text-muted);
-  --color-link: var(--skit-link);
-  --color-focus-ring: var(--skit-focus-ring-color);
-  --color-tint-bg: var(--skit-tint-bg);
-  --color-tint-text: var(--skit-tint-text);
-
-  --color-success: var(--skit-success-solid);
-  --color-success-bg: var(--skit-success-bg);
-  --color-success-border: var(--skit-success-border);
-  --color-success-text: var(--skit-success-text);
-  --color-warning: var(--skit-warning-solid);
-  --color-warning-bg: var(--skit-warning-bg);
-  --color-warning-border: var(--skit-warning-border);
-  --color-warning-text: var(--skit-warning-text);
-  --color-danger: var(--skit-danger-solid);
-  --color-danger-bg: var(--skit-danger-bg);
-  --color-danger-border: var(--skit-danger-border);
-  --color-danger-text: var(--skit-danger-text);
-  --color-info: var(--skit-info-solid);
-  --color-info-bg: var(--skit-info-bg);
-  --color-info-border: var(--skit-info-border);
-  --color-info-text: var(--skit-info-text);
-}
-
 /* static: always emitted, because base.css and consumers read these variables directly. */
 @theme static {
   --font-*: initial;
@@ -115,4 +57,67 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --default-transition-duration: var(--skit-duration-fast);
   --default-transition-timing-function: var(--skit-easing);
+}
+
+/*
+ * inline: utilities read the runtime --skit-* variable, so presets, modes and token bridges apply per element.
+ * Must come after the static block: its `--text-*: initial` would otherwise wipe the --text-color-* roles.
+ */
+@theme inline {
+  --color-*: initial;
+  --color-white: var(--skit-white);
+
+  --color-primary-50: var(--skit-primary-50);
+  --color-primary-100: var(--skit-primary-100);
+  --color-primary-200: var(--skit-primary-200);
+  --color-primary-300: var(--skit-primary-300);
+  --color-primary-400: var(--skit-primary-400);
+  --color-primary-500: var(--skit-primary-500);
+  --color-primary-600: var(--skit-primary-600);
+  --color-primary-700: var(--skit-primary-700);
+  --color-primary-800: var(--skit-primary-800);
+  --color-primary-900: var(--skit-primary-900);
+  --color-primary-950: var(--skit-primary-950);
+
+  --color-neutral-50: var(--skit-neutral-50);
+  --color-neutral-100: var(--skit-neutral-100);
+  --color-neutral-200: var(--skit-neutral-200);
+  --color-neutral-300: var(--skit-neutral-300);
+  --color-neutral-400: var(--skit-neutral-400);
+  --color-neutral-500: var(--skit-neutral-500);
+  --color-neutral-600: var(--skit-neutral-600);
+  --color-neutral-700: var(--skit-neutral-700);
+  --color-neutral-800: var(--skit-neutral-800);
+  --color-neutral-900: var(--skit-neutral-900);
+  --color-neutral-950: var(--skit-neutral-950);
+
+  --color-focus-ring: var(--skit-focus-ring-color);
+
+  /* Role colors are registered per utility, so names read once: skit:text-muted, skit:bg-surface, skit:border-danger. */
+  --text-color-default: var(--skit-text-default);
+  --text-color-muted: var(--skit-text-muted);
+  --text-color-link: var(--skit-link);
+  --text-color-tint: var(--skit-tint-text);
+  --text-color-success: var(--skit-success-text);
+  --text-color-warning: var(--skit-warning-text);
+  --text-color-danger: var(--skit-danger-text);
+  --text-color-info: var(--skit-info-text);
+
+  --background-color-background: var(--skit-background);
+  --background-color-surface: var(--skit-surface);
+  --background-color-tint: var(--skit-tint-bg);
+  --background-color-success: var(--skit-success-bg);
+  --background-color-success-solid: var(--skit-success-solid);
+  --background-color-warning: var(--skit-warning-bg);
+  --background-color-warning-solid: var(--skit-warning-solid);
+  --background-color-danger: var(--skit-danger-bg);
+  --background-color-danger-solid: var(--skit-danger-solid);
+  --background-color-info: var(--skit-info-bg);
+  --background-color-info-solid: var(--skit-info-solid);
+
+  --border-color-strong: var(--skit-border-strong);
+  --border-color-success: var(--skit-success-border);
+  --border-color-warning: var(--skit-warning-border);
+  --border-color-danger: var(--skit-danger-border);
+  --border-color-info: var(--skit-info-border);
 }
