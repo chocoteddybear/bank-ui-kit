@@ -24,6 +24,7 @@ Angular UI kit for banking and financial apps, shown in a Storybook showroom. Po
 - One component per atom. Never separate components per size or variant (no `LargeButton`).
 - Configured by inputs that describe design choices: `variant="primary"`, `size="lg"`. Inputs are typed unions so invalid values fail at build time.
 - No inputs for raw CSS (no `border`, `color`, `radius` inputs). Rare customization goes through component CSS variables, e.g. `--skit-button-radius`.
+- Component styles read design values only from `--skit-*` variables, with no hard-coded fallbacks (a fallback may only be another token: `var(--skit-button-radius, var(--skit-radius-full))`). `styles.css` (added by `ng add`) defines them; without it a component renders unstyled on purpose, so a broken setup is visible immediately.
 - Component styles are self-contained (Angular style encapsulation) and do not depend on `.skit-root`, so a single component can be swapped into a legacy page.
 - One naming rule, no exceptions: every atom is a `<skit-...>` tag, including button and form controls (Ionic model). No attribute directives on native elements for atoms.
 - Each component renders its own correct inner markup and accessibility (roles, aria, labels).
@@ -122,7 +123,7 @@ No red or green. Deposits and purchases both use `text-default`; direction is sh
 | Checkbox | `<skit-checkbox>` | none beyond forms |
 | Radio | `<skit-radio>` | value |
 | Switch | `<skit-switch>` | none beyond forms (renders `role="switch"`) |
-| Icon | `<skit-icon>` | name, size; uses Lucide (`lucide-angular`), wrapped so the set can be swapped later |
+| Icon | `<skit-icon>` | name, size; uses Lucide (`@lucide/angular`), wrapped so the set can be swapped later |
 | Badge | `<skit-badge>` | tone (neutral, primary, success, warning, danger, info) |
 | Avatar | `<skit-avatar>` | src, name (initials fallback), size |
 | Spinner | `<skit-spinner>` | size (renders `role="status"`, announces loading) |

@@ -7,11 +7,12 @@
     "ng": "ng",
     "build": "ng build && node scripts/build-css.mjs",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --watch=false",
+    "test": "node --test 'test/**/*.test.mjs'",
     "lint": "eslint .",
     "storybook": "ng run ui:storybook",
     "build-storybook": "ng run ui:build-storybook",
-    "dev:watch": "ng build --watch --configuration development"
+    "dev:watch": "ng build --watch --configuration development",
+    "test:unit": "ng test --watch=false"
   },
   "exports": {
     "./styles.css": "./styles.css",
@@ -20,8 +21,10 @@
     "./tokens/*": "./tokens/*"
   },
   "peerDependencies": {
+    "@angular/cdk": "^22.2.0",
     "@angular/common": "^22.2.0",
     "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0",
     "tailwindcss": "^4.3.0"
   },
   "peerDependenciesMeta": {
@@ -30,6 +33,7 @@
     }
   },
   "dependencies": {
+    "@lucide/angular": "^1.57.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -38,11 +42,13 @@
     "@angular-devkit/core": "^22.2.2",
     "@angular/animations": "^22.2.2",
     "@angular/build": "^22.2.2",
+    "@angular/cdk": "^22.2.3",
     "@angular/cli": "^22.2.2",
     "@angular/common": "^22.2.2",
     "@angular/compiler": "^22.2.2",
     "@angular/compiler-cli": "^22.2.2",
     "@angular/core": "^22.2.2",
+    "@angular/forms": "^22.2.2",
     "@angular/platform-browser": "^22.2.2",
     "@eslint/js": "^10.0.1",
     "@fontsource/inter": "5.3.0",
