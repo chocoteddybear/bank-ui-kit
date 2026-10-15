@@ -7,12 +7,12 @@
     "ng": "ng",
     "build": "ng build && node scripts/build-css.mjs",
     "watch": "ng build --watch --configuration development",
-    "test": "node --test 'test/**/*.test.mjs'",
+    "test": "ng test --watch=false && node --test 'test/**/*.test.mjs'",
     "lint": "eslint .",
     "storybook": "ng run ui:storybook",
     "build-storybook": "ng run ui:build-storybook",
     "dev:watch": "ng build --watch --configuration development",
-    "test:unit": "ng test --watch=false"
+    "test:css": "node --test 'test/**/*.test.mjs'"
   },
   "exports": {
     "./styles.css": "./styles.css",

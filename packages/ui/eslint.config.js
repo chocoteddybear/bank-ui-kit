@@ -47,7 +47,8 @@ module.exports = defineConfig([
     },
     rules: {
       ...betterTailwind.configs['correctness-error'].rules,
-      'better-tailwindcss/no-unknown-classes': ['error', { ignore: ['^skit-root$'] }],
+      // Only skit: classes are Tailwind; components style their own plain classes in component CSS.
+      'better-tailwindcss/no-unknown-classes': ['error', { ignore: ['^(?!skit:)'] }],
       'better-tailwindcss/no-restricted-classes': [
         'error',
         {

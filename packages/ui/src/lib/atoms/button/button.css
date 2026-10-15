@@ -1,0 +1,148 @@
+:host {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/*
+ * Every property the button relies on is set here, so a host app's global button/font/box-sizing
+ * styles can't leak in. Colors come only from --skit-* tokens; --skit-button-* allow per-use overrides.
+ */
+.button {
+  --_bg: transparent;
+  --_bg-hover: var(--_bg);
+  --_bg-active: var(--_bg-hover);
+  --_fg: var(--skit-text-default);
+  --_border: transparent;
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: 1px solid var(--_border);
+  border-radius: var(--skit-button-radius, var(--skit-radius-full));
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--skit-font-sans);
+  font-weight: var(--skit-font-weight-medium);
+  letter-spacing: normal;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  appearance: none;
+  cursor: pointer;
+  transition:
+    background-color var(--skit-duration-fast) var(--skit-easing),
+    border-color var(--skit-duration-fast) var(--skit-easing);
+}
+
+.button:hover {
+  background: var(--_bg-hover);
+}
+
+.button:active {
+  background: var(--_bg-active);
+}
+
+.button:focus-visible {
+  outline: var(--skit-focus-ring-width) solid var(--skit-focus-ring-color);
+  outline-offset: var(--skit-focus-ring-offset);
+}
+
+/* Variants */
+.button--primary {
+  --_bg: var(--skit-primary-600);
+  --_bg-hover: var(--skit-primary-700);
+  --_bg-active: var(--skit-primary-800);
+  --_fg: var(--skit-white);
+}
+
+.button--secondary {
+  --_bg: var(--skit-tint-bg);
+  --_bg-hover: color-mix(in oklab, var(--skit-tint-bg), var(--skit-tint-text) 10%);
+  --_bg-active: color-mix(in oklab, var(--skit-tint-bg), var(--skit-tint-text) 18%);
+  --_fg: var(--skit-tint-text);
+}
+
+.button--outline {
+  --_border: var(--skit-border-strong);
+  --_bg-hover: color-mix(in oklab, transparent, var(--skit-text-default) 6%);
+  --_bg-active: color-mix(in oklab, transparent, var(--skit-text-default) 12%);
+}
+
+.button--ghost {
+  --_bg-hover: color-mix(in oklab, transparent, var(--skit-text-default) 6%);
+  --_bg-active: color-mix(in oklab, transparent, var(--skit-text-default) 12%);
+}
+
+.button--danger {
+  --_bg: var(--skit-danger-solid);
+  --_bg-hover: color-mix(in oklab, var(--skit-danger-solid), var(--skit-neutral-950) 12%);
+  --_bg-active: color-mix(in oklab, var(--skit-danger-solid), var(--skit-neutral-950) 22%);
+  --_fg: var(--skit-white);
+}
+
+/* Sizes: heights 32 / 40 / 48 on the 4px grid */
+.button--sm {
+  min-height: calc(var(--skit-spacing) * 8);
+  padding: 0 calc(var(--skit-spacing) * 3);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+}
+
+.button--md {
+  min-height: calc(var(--skit-spacing) * 10);
+  padding: 0 calc(var(--skit-spacing) * 4);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+}
+
+.button--lg {
+  min-height: calc(var(--skit-spacing) * 12);
+  padding: 0 calc(var(--skit-spacing) * 6);
+  font-size: var(--skit-text-base);
+  line-height: var(--skit-text-base--line-height);
+}
+
+/* States */
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--_bg);
+}
+
+.button[aria-busy='true'] {
+  cursor: progress;
+  background: var(--_bg);
+}
+
+/* The label keeps its space while loading, so the button doesn't change width. */
+.button[aria-busy='true'] .label {
+  visibility: hidden;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: skit-button-spin 0.7s linear infinite;
+}
+
+@keyframes skit-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.6s;
+  }
+}
