@@ -3,11 +3,12 @@
   [class]="classes()"
   [type]="type()"
   [disabled]="disabled()"
+  [attr.aria-label]="ariaLabel() || null"
   [attr.aria-disabled]="loading() ? 'true' : null"
   [attr.aria-busy]="loading() ? 'true' : null"
 >
   @if (loading()) {
     <span class="spinner" aria-hidden="true"></span>
   }
-  <span class="label"><ng-content /></span>
+  <span class="label" #label><ng-content /></span>
 </button>

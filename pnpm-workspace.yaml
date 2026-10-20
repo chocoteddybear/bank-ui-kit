@@ -14,3 +14,8 @@ minimumReleaseAgeExclude:
 # Optional peer of @analogjs/vite-plugin-angular; we build with @angular/build, so keep the deprecated webpack toolchain out.
 overrides:
   '@angular-devkit/build-angular': '-'
+
+# The demo's dev server serves @vladlev/skit unbundled (prebundle.exclude, for live reload), so it must
+# resolve the kit's own dependencies itself. Hoisting them to the root makes them reachable in dev only.
+publicHoistPattern:
+  - '@lucide/angular'

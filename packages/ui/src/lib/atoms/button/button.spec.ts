@@ -129,6 +129,86 @@ describe('SkitButton', () => {
     });
   });
 
+  describe('forwards aria-label', () => {
+    @Component({
+      imports: [SkitButton],
+      template: `<skit-button aria-label="Close dialog">×</skit-button>`,
+    })
+    class IconOnlyHost {}
+
+    async function setupIconOnly() {
+      const fixture = TestBed.createComponent(IconOnlyHost);
+      await fixture.whenStable();
+      const element: HTMLElement = fixture.nativeElement;
+      return {
+        skitButton: element.querySelector('skit-button') as HTMLElement,
+        button: element.querySelector('button') as HTMLButtonElement,
+      };
+    }
+
+    it('puts the label on the inner native button', async () => {
+      const { button } = await setupIconOnly();
+      expect(button.getAttribute('aria-label')).toBe('Close dialog');
+    });
+
+    it('removes it from the host, where it would be invalid ARIA', async () => {
+      const { skitButton } = await setupIconOnly();
+      expect(skitButton.hasAttribute('aria-label')).toBe(false);
+    });
+
+    it('sets no aria-label by default', async () => {
+      const { button } = await setupDefaults();
+      expect(button.hasAttribute('aria-label')).toBe(false);
+    });
+  });
+
+  describe('icon-only', () => {
+    @Component({
+      imports: [SkitButton],
+      template: `
+        <skit-button aria-label="Send">
+          <svg class="glyph"></svg>
+          @if (withText()) { Send money }
+        </skit-button>
+      `,
+    })
+    class IconHost {
+      readonly withText = signal(false);
+    }
+
+    async function setupIcon(withText: boolean) {
+      const fixture = TestBed.createComponent(IconHost);
+      fixture.componentInstance.withText.set(withText);
+      await fixture.whenStable();
+      const button = (fixture.nativeElement as HTMLElement).querySelector('button') as HTMLButtonElement;
+      return { fixture, button };
+    }
+
+    it('becomes a circle when the content is only an icon', async () => {
+      const { button } = await setupIcon(false);
+      expect(button.classList).toContain('button--icon-only');
+    });
+
+    it('stays a pill when the icon comes with text', async () => {
+      const { button } = await setupIcon(true);
+      expect(button.classList).not.toContain('button--icon-only');
+    });
+
+    it('follows content that changes after the first render', async () => {
+      const { fixture, button } = await setupIcon(false);
+      fixture.componentInstance.withText.set(true);
+      await fixture.whenStable();
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+      expect(button.classList).not.toContain('button--icon-only');
+    });
+
+    it('does not treat a text-only button as icon-only', async () => {
+      const { button } = await setup();
+      expect(button.classList).not.toContain('button--icon-only');
+    });
+  });
+
   describe('loading', () => {
     it('marks the button busy and disabled for assistive technology', async () => {
       const { button } = await setup({ loading: true });

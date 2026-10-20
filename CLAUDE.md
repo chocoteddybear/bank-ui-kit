@@ -29,7 +29,7 @@ Angular UI kit for banking and financial apps, shown in a Storybook showroom. Po
 - One naming rule, no exceptions: every atom is a `<skit-...>` tag, including button and form controls (Ionic model). No attribute directives on native elements for atoms.
 - Each component renders its own correct inner markup and accessibility (roles, aria, labels).
 - Form atoms (`skit-input`, `skit-select`, `skit-checkbox`, `skit-radio`, `skit-switch`) implement `ControlValueAccessor` so `formControlName` and `ngModel` work.
-- Native attribute forwarding: form atoms forward `type`, `name`, `id`, `autocomplete`, `inputmode`, `placeholder`, `required`, `disabled`, `readonly`, `maxlength`, `minlength`, `pattern`, `aria-label`, `aria-describedby` to the inner native element. `skit-button` forwards `type` and `disabled`. Every forwarded attribute has a test. Banking depends on this (card autofill `autocomplete="cc-number"`, numeric keyboard `inputmode="decimal"`).
+- Native attribute forwarding: form atoms forward `type`, `name`, `id`, `autocomplete`, `inputmode`, `placeholder`, `required`, `disabled`, `readonly`, `maxlength`, `minlength`, `pattern`, `aria-label`, `aria-describedby` to the inner native element. `skit-button` forwards `type`, `disabled` and `aria-label` (required for icon-only buttons). Every forwarded attribute has a test. Banking depends on this (card autofill `autocomplete="cc-number"`, numeric keyboard `inputmode="decimal"`).
 - Host elements set an explicit `display` so the extra wrapper does not break layout.
 
 ## Styling approach for plain HTML
@@ -123,7 +123,7 @@ No red or green. Deposits and purchases both use `text-default`; direction is sh
 | Checkbox | `<skit-checkbox>` | none beyond forms |
 | Radio | `<skit-radio>` | value |
 | Switch | `<skit-switch>` | none beyond forms (renders `role="switch"`) |
-| Icon | `<skit-icon>` | name, size; uses Lucide (`@lucide/angular`), wrapped so the set can be swapped later |
+| Icon | `<skit-icon>` | name (typed list of the kit's curated icons), size, label (makes it meaningful; decorative and hidden from screen readers without it); uses Lucide (`@lucide/angular`), wrapped so the set can be swapped later |
 | Badge | `<skit-badge>` | tone (neutral, primary, success, warning, danger, info) |
 | Avatar | `<skit-avatar>` | src, name (initials fallback), size |
 | Spinner | `<skit-spinner>` | size (renders `role="status"`, announces loading) |

@@ -86,21 +86,27 @@
 
 /* Sizes: heights 32 / 40 / 48 on the 4px grid */
 .button--sm {
-  min-height: calc(var(--skit-spacing) * 8);
+  --_height: calc(var(--skit-spacing) * 8);
+
+  min-height: var(--_height);
   padding: 0 calc(var(--skit-spacing) * 3);
   font-size: var(--skit-text-sm);
   line-height: var(--skit-text-sm--line-height);
 }
 
 .button--md {
-  min-height: calc(var(--skit-spacing) * 10);
+  --_height: calc(var(--skit-spacing) * 10);
+
+  min-height: var(--_height);
   padding: 0 calc(var(--skit-spacing) * 4);
   font-size: var(--skit-text-sm);
   line-height: var(--skit-text-sm--line-height);
 }
 
 .button--lg {
-  min-height: calc(var(--skit-spacing) * 12);
+  --_height: calc(var(--skit-spacing) * 12);
+
+  min-height: var(--_height);
   padding: 0 calc(var(--skit-spacing) * 6);
   font-size: var(--skit-text-base);
   line-height: var(--skit-text-base--line-height);
@@ -116,6 +122,18 @@
 .button[aria-busy='true'] {
   cursor: progress;
   background: var(--_bg);
+}
+
+.button--icon-only {
+  width: var(--_height);
+  padding: 0;
+}
+
+/* Icon + text sit side by side. */
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--skit-spacing) * 2);
 }
 
 /* The label keeps its space while loading, so the button doesn't change width. */
