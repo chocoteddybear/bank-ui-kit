@@ -29,7 +29,7 @@ Angular UI kit for banking and financial apps, shown in a Storybook showroom. Po
 - One naming rule, no exceptions: every atom is a `<skit-...>` tag, including button and form controls (Ionic model). No attribute directives on native elements for atoms.
 - Each component renders its own correct inner markup and accessibility (roles, aria, labels).
 - Form atoms (`skit-input`, `skit-select`, `skit-checkbox`, `skit-radio`, `skit-switch`) implement `ControlValueAccessor` so `formControlName` and `ngModel` work.
-- Native attribute forwarding: form atoms forward `type`, `name`, `id`, `autocomplete`, `inputmode`, `placeholder`, `required`, `disabled`, `readonly`, `maxlength`, `minlength`, `pattern`, `aria-label`, `aria-describedby` to the inner native element. `skit-button` forwards `type`, `disabled` and `aria-label` (required for icon-only buttons). Every forwarded attribute has a test. Banking depends on this (card autofill `autocomplete="cc-number"`, numeric keyboard `inputmode="decimal"`).
+- Native attribute forwarding: form atoms forward `type`, `name`, `id`, `autocomplete`, `inputmode`, `placeholder`, `required`, `disabled`, `readonly`, `maxlength`, `minlength`, `pattern`, `aria-label`, `aria-describedby` to the inner native element (each atom forwards the ones its native element supports) and remove them from the host, so ids stay unique. `skit-button` forwards `type`, `disabled` and `aria-label` (required for icon-only buttons). Every forwarded attribute has a test. Banking depends on this (card autofill `autocomplete="cc-number"`, numeric keyboard `inputmode="decimal"`).
 - Host elements set an explicit `display` so the extra wrapper does not break layout.
 
 ## Styling approach for plain HTML
@@ -118,10 +118,10 @@ No red or green. Deposits and purchases both use `text-default`; direction is sh
 | Atom | Tag | Key inputs |
 |---|---|---|
 | Button | `<skit-button>` | variant (primary, secondary, outline, ghost, danger), size (sm, md, lg), loading, type, disabled |
-| Text input | `<skit-input>` | size, native attributes forwarded; invalid state from Angular forms |
+| Text input | `<skit-input>` | size, native attributes forwarded; value is always a string; invalid state from Angular forms, shown once touched |
 | Select | `<skit-select>` | size; wraps a native `<select>` (keyboard, screen readers, positioning come from the browser). Closed state fully styled (`appearance: none` + Lucide chevron). Open list styled with `appearance: base-select` / `::picker(select)` where supported (Chromium 135+), only on `(pointer: fine)` so phones keep the native picker; other browsers fall back to the OS list. |
-| Checkbox | `<skit-checkbox>` | none beyond forms |
-| Radio | `<skit-radio>` | value |
+| Checkbox | `<skit-checkbox>` | none beyond forms; boolean value; "must be checked" uses `Validators.requiredTrue` |
+| Radio | `<skit-radio>` | value; radios of a group share `name` and one form control |
 | Switch | `<skit-switch>` | none beyond forms (renders `role="switch"`) |
 | Icon | `<skit-icon>` | name (typed list of the kit's curated icons), size, label (makes it meaningful; decorative and hidden from screen readers without it); uses Lucide (`@lucide/angular`), wrapped so the set can be swapped later |
 | Badge | `<skit-badge>` | tone (neutral, primary, success, warning, danger, info) |

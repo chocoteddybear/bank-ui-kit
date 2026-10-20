@@ -1,0 +1,20 @@
+<label class="choice">
+  <span class="control">
+    <input
+      type="checkbox"
+      class="native"
+      [checked]="model()"
+      [disabled]="isDisabled()"
+      [required]="required()"
+      [attr.id]="id() ?? null"
+      [attr.name]="name() ?? null"
+      [attr.aria-label]="ariaLabel() ?? null"
+      [attr.aria-describedby]="ariaDescribedby() ?? null"
+      [attr.aria-invalid]="invalid() ? 'true' : null"
+      (change)="onToggle($event)"
+      (blur)="onBlur()"
+    />
+    <svg class="mark" [lucideIcon]="checkIcon" aria-hidden="true" focusable="false"></svg>
+  </span>
+  <span class="text"><ng-content /></span>
+</label>

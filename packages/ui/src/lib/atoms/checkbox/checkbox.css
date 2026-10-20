@@ -1,0 +1,27 @@
+.native {
+  width: calc(var(--skit-spacing) * 5);
+  height: calc(var(--skit-spacing) * 5);
+  border-radius: calc(var(--skit-radius-sm) * 0.75);
+}
+
+.native:checked {
+  border-color: var(--skit-primary-600);
+  background: var(--skit-primary-600);
+}
+
+.mark {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(var(--skit-spacing) * 3.5);
+  height: calc(var(--skit-spacing) * 3.5);
+  color: var(--skit-white);
+  stroke-width: 3;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--skit-duration-fast) var(--skit-easing);
+}
+
+.native:checked + .mark {
+  opacity: 1;
+}

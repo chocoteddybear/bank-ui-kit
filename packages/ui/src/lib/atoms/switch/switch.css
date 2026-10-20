@@ -1,0 +1,29 @@
+/* Track 36 x 20, thumb 14, on the 4px grid. */
+.native {
+  width: calc(var(--skit-spacing) * 9);
+  height: calc(var(--skit-spacing) * 5);
+  border-radius: var(--skit-radius-full);
+  border-color: transparent;
+  background: color-mix(in oklab, transparent, var(--skit-text-muted) 55%);
+}
+
+.native:checked {
+  background: var(--skit-primary-600);
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: calc(var(--skit-spacing) * 3.5);
+  height: calc(var(--skit-spacing) * 3.5);
+  border-radius: var(--skit-radius-full);
+  background: var(--skit-white);
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: transform var(--skit-duration-base) var(--skit-easing);
+}
+
+.native:checked + .thumb {
+  transform: translate(calc(var(--skit-spacing) * 4), -50%);
+}

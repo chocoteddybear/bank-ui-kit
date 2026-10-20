@@ -1,0 +1,21 @@
+<label class="choice">
+  <span class="control">
+    <input
+      type="radio"
+      class="native"
+      [value]="value()"
+      [checked]="checked()"
+      [disabled]="isDisabled()"
+      [required]="required()"
+      [attr.id]="id() ?? null"
+      [attr.name]="name() ?? null"
+      [attr.aria-label]="ariaLabel() ?? null"
+      [attr.aria-describedby]="ariaDescribedby() ?? null"
+      [attr.aria-invalid]="invalid() ? 'true' : null"
+      (change)="onSelect()"
+      (blur)="onBlur()"
+    />
+    <span class="dot" aria-hidden="true"></span>
+  </span>
+  <span class="text"><ng-content /></span>
+</label>

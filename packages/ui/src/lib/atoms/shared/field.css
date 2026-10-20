@@ -1,0 +1,70 @@
+/* Shared look of text-like fields (skit-input, skit-select). Heights 32 / 40 / 48 match skit-button. */
+:host {
+  --_height: calc(var(--skit-spacing) * 10);
+  --_padding-x: calc(var(--skit-spacing) * 3);
+  --_font-size: var(--skit-text-base);
+  --_line-height: var(--skit-text-base--line-height);
+
+  display: block;
+}
+
+:host([data-size='sm']) {
+  --_height: calc(var(--skit-spacing) * 8);
+  --_padding-x: calc(var(--skit-spacing) * 2);
+  --_font-size: var(--skit-text-sm);
+  --_line-height: var(--skit-text-sm--line-height);
+}
+
+:host([data-size='lg']) {
+  --_height: calc(var(--skit-spacing) * 12);
+  --_padding-x: calc(var(--skit-spacing) * 4);
+}
+
+.field {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: var(--_height);
+  margin: 0;
+  padding: 0 var(--_padding-x);
+  border: 1px solid var(--skit-border);
+  border-radius: var(--skit-input-radius, var(--skit-radius-md));
+  background: var(--skit-surface);
+  color: var(--skit-text-default);
+  font-family: var(--skit-font-sans);
+  /* md/lg stay at 16px: smaller text makes iOS Safari zoom the page on focus. */
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--skit-font-weight-regular);
+  letter-spacing: normal;
+  text-transform: none;
+  appearance: none;
+  transition: border-color var(--skit-duration-fast) var(--skit-easing);
+}
+
+.field::placeholder {
+  color: var(--skit-text-muted);
+  opacity: 1;
+}
+
+.field:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--skit-border), var(--skit-text-default) 30%);
+}
+
+.field:focus-visible {
+  outline: var(--skit-focus-ring-width) solid var(--skit-focus-ring-color);
+  outline-offset: var(--skit-focus-ring-offset);
+}
+
+.field[aria-invalid='true'] {
+  border-color: var(--skit-danger-solid);
+}
+
+.field[aria-invalid='true']:focus-visible {
+  outline-color: var(--skit-danger-solid);
+}
+
+.field:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

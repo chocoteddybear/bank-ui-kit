@@ -1,0 +1,23 @@
+<div class="wrap">
+  <select
+    #select
+    class="field"
+    [class.field--placeholder]="!!placeholder() && model() === ''"
+    [disabled]="isDisabled()"
+    [required]="required()"
+    [attr.id]="id() ?? null"
+    [attr.name]="name() ?? null"
+    [attr.autocomplete]="autocomplete() ?? null"
+    [attr.aria-label]="ariaLabel() ?? null"
+    [attr.aria-describedby]="ariaDescribedby() ?? null"
+    [attr.aria-invalid]="invalid() ? 'true' : null"
+    (change)="onSelectChange($event)"
+    (blur)="onBlur()"
+  >
+    @if (placeholder()) {
+      <option value="" disabled>{{ placeholder() }}</option>
+    }
+    <ng-content />
+  </select>
+  <svg class="chevron" [lucideIcon]="chevron" aria-hidden="true" focusable="false"></svg>
+</div>

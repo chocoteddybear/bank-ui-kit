@@ -1,0 +1,76 @@
+.wrap {
+  position: relative;
+}
+
+.field {
+  padding-right: calc(var(--_padding-x) + var(--skit-spacing) * 6);
+  /* The base-select rendering doesn't center its content like the classic select does. */
+  align-content: center;
+  cursor: pointer;
+}
+
+.field--placeholder {
+  color: var(--skit-text-muted);
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: var(--_padding-x);
+  width: calc(var(--skit-spacing) * 5);
+  height: calc(var(--skit-spacing) * 5);
+  transform: translateY(-50%);
+  color: var(--skit-text-muted);
+  pointer-events: none;
+}
+
+/*
+ * The open list: styled where the browser supports it (Chromium 135+), and only with a mouse,
+ * so phones keep their native picker. Elsewhere the OS list is used.
+ * Options are the app's projected content, hence ::ng-deep, kept inside :host.
+ */
+@media (pointer: fine) {
+  @supports (appearance: base-select) {
+    .field,
+    .field::picker(select) {
+      appearance: base-select;
+    }
+
+    .field::picker-icon {
+      display: none;
+    }
+
+    .field::picker(select) {
+      box-sizing: border-box;
+      margin-top: var(--skit-spacing);
+      padding: var(--skit-spacing);
+      border: 1px solid var(--skit-border);
+      border-radius: var(--skit-radius-md);
+      background: var(--skit-surface);
+      color: var(--skit-text-default);
+    }
+
+    :host ::ng-deep option {
+      padding: calc(var(--skit-spacing) * 2) calc(var(--skit-spacing) * 3);
+      border-radius: var(--skit-radius-sm);
+      font-size: var(--_font-size);
+      line-height: var(--_line-height);
+    }
+
+    :host ::ng-deep option:hover,
+    :host ::ng-deep option:focus-visible {
+      background: color-mix(in oklab, transparent, var(--skit-text-default) 6%);
+      outline: none;
+    }
+
+    :host ::ng-deep option:checked {
+      background: var(--skit-tint-bg);
+      color: var(--skit-tint-text);
+      font-weight: var(--skit-font-weight-medium);
+    }
+
+    :host ::ng-deep option::checkmark {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+/*
+ * Shared layout of checkbox, radio and switch: the real native <input> (restyled with appearance: none)
+ * next to the projected label text, all inside one <label> so the text is clickable too.
+ */
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.choice {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: calc(var(--skit-spacing) * 2);
+  color: var(--skit-text-default);
+  font-family: var(--skit-font-sans);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+  cursor: pointer;
+}
+
+.choice:has(.native:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.native {
+  box-sizing: border-box;
+  margin: 0;
+  appearance: none;
+  cursor: inherit;
+  /* Unchecked edges use text-muted, not the light border role, to keep 3:1 contrast for controls. */
+  border: 1.5px solid var(--skit-text-muted);
+  background: var(--skit-surface);
+  transition:
+    background-color var(--skit-duration-fast) var(--skit-easing),
+    border-color var(--skit-duration-fast) var(--skit-easing);
+}
+
+.native:focus-visible {
+  outline: var(--skit-focus-ring-width) solid var(--skit-focus-ring-color);
+  outline-offset: var(--skit-focus-ring-offset);
+}
+
+.native[aria-invalid='true'] {
+  border-color: var(--skit-danger-solid);
+}
+
+.text:empty {
+  display: none;
+}

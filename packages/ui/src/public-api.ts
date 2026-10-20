@@ -9,3 +9,8 @@ export * from './lib/atoms/badge/badge';
 export * from './lib/atoms/avatar/avatar';
 export * from './lib/atoms/skeleton/skeleton';
 export * from './lib/atoms/amount/amount';
+export * from './lib/atoms/input/input';
+export * from './lib/atoms/select/select';
+export * from './lib/atoms/checkbox/checkbox';
+export * from './lib/atoms/radio/radio';
+export * from './lib/atoms/switch/switch';
