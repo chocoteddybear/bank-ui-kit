@@ -1,0 +1,44 @@
+/* Sizes 32 / 40 / 48, matching button heights. */
+:host {
+  --_size: calc(var(--skit-spacing) * 10);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+  width: var(--_size);
+  height: var(--_size);
+  border-radius: var(--skit-avatar-radius, var(--skit-radius-full));
+  overflow: hidden;
+}
+
+:host([data-size='sm']) {
+  --_size: calc(var(--skit-spacing) * 8);
+}
+
+:host([data-size='lg']) {
+  --_size: calc(var(--skit-spacing) * 12);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  /* A notch stronger than the plain tint, which is too close to the page background for a standalone disc. */
+  background: color-mix(in oklab, var(--skit-tint-bg), var(--skit-tint-text) 14%);
+  color: var(--skit-tint-text);
+  font-family: var(--skit-font-sans);
+  font-size: calc(var(--_size) * 0.4);
+  font-weight: var(--skit-font-weight-semibold);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  user-select: none;
+}

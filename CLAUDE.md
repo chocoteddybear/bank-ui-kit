@@ -125,10 +125,10 @@ No red or green. Deposits and purchases both use `text-default`; direction is sh
 | Switch | `<skit-switch>` | none beyond forms (renders `role="switch"`) |
 | Icon | `<skit-icon>` | name (typed list of the kit's curated icons), size, label (makes it meaningful; decorative and hidden from screen readers without it); uses Lucide (`@lucide/angular`), wrapped so the set can be swapped later |
 | Badge | `<skit-badge>` | tone (neutral, primary, success, warning, danger, info) |
-| Avatar | `<skit-avatar>` | src, name (initials fallback), size |
-| Spinner | `<skit-spinner>` | size (renders `role="status"`, announces loading) |
-| Skeleton | `<skit-skeleton>` | width, height, shape |
-| Amount | `<skit-amount>` | value, currency, size; always signed, tabular numerals |
+| Avatar | `<skit-avatar>` | src, name (required: accessible name and initials fallback, also when the image fails), size |
+| Spinner | `<skit-spinner>` | size, label (renders `role="status"`, announces the label via CDK LiveAnnouncer) |
+| Skeleton | `<skit-skeleton>` | width, height (number = px, or a CSS length), shape (text, rect, circle); hidden from screen readers |
+| Amount | `<skit-amount>` | value (number, or decimal string for exact amounts), currency (ISO code), size; always signed, tabular numerals, app locale; screen readers hear "plus"/"minus" |
 
 Text, Label, and Divider are not components: plain tags and typography classes cover them.
 

@@ -1,0 +1,7 @@
+@if (showImage()) {
+  <img class="image" [src]="src()" [alt]="name()" (error)="onError()" />
+} @else {
+  <span class="initials" role="img" [attr.aria-label]="name()">
+    <span aria-hidden="true">{{ initials() }}</span>
+  </span>
+}

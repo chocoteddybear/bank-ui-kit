@@ -1,0 +1,34 @@
+/* Never red or green: direction is shown by the sign only. Tabular digits keep columns aligned. */
+:host {
+  display: inline-block;
+  color: var(--skit-text-default);
+  font-family: var(--skit-font-sans);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--skit-font-weight-medium);
+  font-size: var(--skit-text-base);
+  line-height: var(--skit-text-base--line-height);
+  white-space: nowrap;
+}
+
+:host([data-size='sm']) {
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+}
+
+:host([data-size='lg']) {
+  font-size: var(--skit-text-2xl);
+  line-height: var(--skit-text-2xl--line-height);
+  font-weight: var(--skit-font-weight-semibold);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

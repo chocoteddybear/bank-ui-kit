@@ -1,0 +1,53 @@
+/* Tinted tags: light tint + dark text in light mode, dark tint + light text in dark mode (the role tokens flip). */
+:host {
+  --_bg: color-mix(in oklab, transparent, var(--skit-text-default) 7%);
+  --_fg: var(--skit-text-default);
+  --_border: var(--skit-border);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--skit-spacing);
+  vertical-align: middle;
+  min-height: calc(var(--skit-spacing) * 6);
+  padding: 0 calc(var(--skit-spacing) * 2);
+  border: 1px solid var(--_border);
+  border-radius: var(--skit-badge-radius, var(--skit-radius-sm));
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--skit-font-sans);
+  font-size: var(--skit-text-xs);
+  line-height: var(--skit-text-xs--line-height);
+  font-weight: var(--skit-font-weight-medium);
+  white-space: nowrap;
+}
+
+:host([data-tone='primary']) {
+  --_bg: var(--skit-tint-bg);
+  --_fg: var(--skit-tint-text);
+  --_border: color-mix(in oklab, var(--skit-tint-bg), var(--skit-tint-text) 20%);
+}
+
+:host([data-tone='success']) {
+  --_bg: var(--skit-success-bg);
+  --_fg: var(--skit-success-text);
+  --_border: var(--skit-success-border);
+}
+
+:host([data-tone='warning']) {
+  --_bg: var(--skit-warning-bg);
+  --_fg: var(--skit-warning-text);
+  --_border: var(--skit-warning-border);
+}
+
+:host([data-tone='danger']) {
+  --_bg: var(--skit-danger-bg);
+  --_fg: var(--skit-danger-text);
+  --_border: var(--skit-danger-border);
+}
+
+:host([data-tone='info']) {
+  --_bg: var(--skit-info-bg);
+  --_fg: var(--skit-info-text);
+  --_border: var(--skit-info-border);
+}

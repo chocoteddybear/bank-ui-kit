@@ -1,0 +1,6 @@
+@if (parts(); as amount) {
+  <span aria-hidden="true">{{ amount.visible }}</span>
+  <span class="visually-hidden">{{ amount.spoken }}</span>
+} @else {
+  <span aria-label="Amount unavailable">—</span>
+}
