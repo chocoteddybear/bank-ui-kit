@@ -12,6 +12,21 @@ pnpm dev              # rebuild the library on change
 pnpm lint
 ```
 
+## Demo
+
+A money-transfer flow built only from skit components, themed for a credit union through the token bridge
+(`--skit-primary-*` mapped to a navy scale). Concept only: not affiliated with any institution, sample data.
+
+| Details | Review (dark mode) | Done |
+|---|---|---|
+| ![Transfer details](docs/screenshots/desktop-details.png) | ![Review step in dark mode](docs/screenshots/dark-review.png) | ![Transfer complete](docs/screenshots/desktop-done.png) |
+
+On phones the preview moves under the form and the step actions become a bar pinned to the bottom of the screen.
+
+| Details | Review | Done |
+|---|---|---|
+| <img src="docs/screenshots/mobile-details.png" alt="Transfer details on a phone" width="260"> | <img src="docs/screenshots/mobile-review.png" alt="Review step on a phone" width="260"> | <img src="docs/screenshots/mobile-done.png" alt="Transfer complete on a phone" width="260"> |
+
 ## Adding the kit to an app
 
 The kit is built to drop into existing apps (Tailwind, Bootstrap, plain CSS) without changing them:
