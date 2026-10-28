@@ -108,6 +108,31 @@ export const InAForm: Story = {
   }),
 };
 
+export const FullWidth: Story = {
+  name: 'Full width',
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          'The button fills its host, so width is a layout decision of the page: stretch `<skit-button>` ' +
+          '(`skit:w-full`, `skit:flex-1`) and the label stays centered. One action takes the full row, two share it.',
+      },
+    },
+  },
+  render: () => ({
+    template: `
+      <div class="skit-root skit:flex skit:max-w-sm skit:flex-col skit:gap-3 skit:bg-background skit:p-8">
+        <skit-button size="lg" class="skit:w-full">Review transfer</skit-button>
+        <div class="skit:flex skit:gap-3">
+          <skit-button variant="ghost" size="lg" class="skit:flex-1">Edit</skit-button>
+          <skit-button size="lg" class="skit:flex-1">Confirm and send</skit-button>
+        </div>
+      </div>
+    `,
+  }),
+};
+
 export const CustomRadius: Story = {
   name: 'Custom radius (CSS variable)',
   parameters: {

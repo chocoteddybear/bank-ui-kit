@@ -1,0 +1,53 @@
+/* Tinted like the badge: the semantic tokens flip with light and dark mode. Title and icon carry the tone. */
+:host {
+  --_bg: var(--skit-info-bg);
+  --_border: var(--skit-info-border);
+  --_accent: var(--skit-info-text);
+
+  box-sizing: border-box;
+  display: flex;
+  gap: calc(var(--skit-spacing) * 3);
+  padding: calc(var(--skit-spacing) * 4);
+  border: 1px solid var(--_border);
+  border-radius: var(--skit-alert-radius, var(--skit-radius-md));
+  background: var(--_bg);
+  color: var(--skit-text-default);
+  font-family: var(--skit-font-sans);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+}
+
+:host([data-tone='success']) {
+  --_bg: var(--skit-success-bg);
+  --_border: var(--skit-success-border);
+  --_accent: var(--skit-success-text);
+}
+
+:host([data-tone='warning']) {
+  --_bg: var(--skit-warning-bg);
+  --_border: var(--skit-warning-border);
+  --_accent: var(--skit-warning-text);
+}
+
+:host([data-tone='danger']) {
+  --_bg: var(--skit-danger-bg);
+  --_border: var(--skit-danger-border);
+  --_accent: var(--skit-danger-text);
+}
+
+.icon {
+  color: var(--_accent);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--skit-spacing);
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  color: var(--_accent);
+  font-weight: var(--skit-font-weight-semibold);
+}

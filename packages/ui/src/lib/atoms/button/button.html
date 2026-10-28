@@ -3,6 +3,7 @@
   [class]="classes()"
   [type]="type()"
   [disabled]="disabled()"
+  [attr.form]="form() ?? null"
   [attr.aria-label]="ariaLabel() || null"
   [attr.aria-disabled]="loading() ? 'true' : null"
   [attr.aria-busy]="loading() ? 'true' : null"

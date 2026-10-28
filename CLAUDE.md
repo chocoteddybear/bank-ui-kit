@@ -29,7 +29,7 @@ Angular UI kit for banking and financial apps, shown in a Storybook showroom. Po
 - One naming rule, no exceptions: every atom is a `<skit-...>` tag, including button and form controls (Ionic model). No attribute directives on native elements for atoms.
 - Each component renders its own correct inner markup and accessibility (roles, aria, labels).
 - Form atoms (`skit-input`, `skit-select`, `skit-checkbox`, `skit-radio`, `skit-switch`) implement `ControlValueAccessor` so `formControlName` and `ngModel` work.
-- Native attribute forwarding: form atoms forward `type`, `name`, `id`, `autocomplete`, `inputmode`, `placeholder`, `required`, `disabled`, `readonly`, `maxlength`, `minlength`, `pattern`, `aria-label`, `aria-describedby` to the inner native element (each atom forwards the ones its native element supports) and remove them from the host, so ids stay unique. `skit-button` forwards `type`, `disabled` and `aria-label` (required for icon-only buttons). Every forwarded attribute has a test. Banking depends on this (card autofill `autocomplete="cc-number"`, numeric keyboard `inputmode="decimal"`).
+- Native attribute forwarding: form atoms forward `type`, `name`, `id`, `autocomplete`, `inputmode`, `placeholder`, `required`, `disabled`, `readonly`, `maxlength`, `minlength`, `pattern`, `aria-label`, `aria-describedby` to the inner native element (each atom forwards the ones its native element supports) and remove them from the host, so ids stay unique. `skit-button` fills its host, so full-width or equal-width buttons are a layout choice of the page (`w-full`, `flex-1`), never an input. It forwards `type`, `disabled`, `form` (a submit button outside its form, e.g. a sticky action bar) and `aria-label` (required for icon-only buttons). Every forwarded attribute has a test. Banking depends on this (card autofill `autocomplete="cc-number"`, numeric keyboard `inputmode="decimal"`).
 - Host elements set an explicit `display` so the extra wrapper does not break layout.
 
 ## Styling approach for plain HTML
@@ -96,7 +96,7 @@ Semantic, dark (bg / border / text; solid unchanged):
 - Dark depth: raised surfaces are lighter than the page. Still no shadows.
 
 ### Money amounts
-No red or green. Deposits and purchases both use `text-default`; direction is shown by the sign (`+$3,200.00`, `-$84.20`). Red is reserved for real problems (errors, overdrafts). The `Amount` atom always shows the sign and uses tabular numerals.
+No red or green. Deposits and purchases both use `text-default`; direction is shown by the sign (`+$3,200.00`, `-$84.20`). Red is reserved for real problems (errors, overdrafts). The `Amount` atom shows the sign on transactions and uses tabular numerals; balances and neutral sums use `sign="negative"` (`$4,210.55`, overdrawn `-$842.17`).
 
 ## Typography
 - Inter only (self-hosted, weights 400 / 500 / 600), tabular numerals on amounts.
@@ -117,9 +117,9 @@ No red or green. Deposits and purchases both use `text-default`; direction is sh
 ## v1 atom list
 | Atom | Tag | Key inputs |
 |---|---|---|
-| Button | `<skit-button>` | variant (primary, secondary, outline, ghost, danger), size (sm, md, lg), loading, type, disabled |
+| Button | `<skit-button>` | variant (primary, secondary, outline, ghost, danger), size (sm, md, lg), loading, type, disabled, form |
 | Text input | `<skit-input>` | size, native attributes forwarded; value is always a string; invalid state from Angular forms, shown once touched |
-| Select | `<skit-select>` | size; wraps a native `<select>` (keyboard, screen readers, positioning come from the browser). Closed state fully styled (`appearance: none` + Lucide chevron). Open list styled with `appearance: base-select` / `::picker(select)` where supported (Chromium 135+), only on `(pointer: fine)` so phones keep the native picker; other browsers fall back to the OS list. |
+| Select | `<skit-select>` | size; wraps a native `<select>` (keyboard, screen readers, positioning come from the browser). Closed state fully styled (`appearance: none` + Lucide chevron). Open list styled with `appearance: base-select` / `::picker(select)` where supported (Chromium 135+, desktop and Android, mouse and touch), anchored under the field and flipped above it when there is no room; other browsers (iOS Safari) fall back to the OS list. One line: long values are cut before the chevron, so keep option labels short (e.g. short account name + last 4 digits). |
 | Checkbox | `<skit-checkbox>` | none beyond forms; boolean value; "must be checked" uses `Validators.requiredTrue` |
 | Radio | `<skit-radio>` | value; radios of a group share `name` and one form control |
 | Switch | `<skit-switch>` | none beyond forms (renders `role="switch"`) |
@@ -128,9 +128,36 @@ No red or green. Deposits and purchases both use `text-default`; direction is sh
 | Avatar | `<skit-avatar>` | src, name (required: accessible name and initials fallback, also when the image fails), size |
 | Spinner | `<skit-spinner>` | size, label (renders `role="status"`, announces the label via CDK LiveAnnouncer) |
 | Skeleton | `<skit-skeleton>` | width, height (number = px, or a CSS length), shape (text, rect, circle); hidden from screen readers |
-| Amount | `<skit-amount>` | value (number, or decimal string for exact amounts), currency (ISO code), size; always signed, tabular numerals, app locale; screen readers hear "plus"/"minus" |
+| Amount | `<skit-amount>` | value (number, or decimal string for exact amounts), currency (ISO code), size, sign (`always` default: +/- for transactions; `negative`: only a minus, for balances and neutral sums like a transfer amount); tabular numerals, app locale; screen readers hear "plus"/"minus" |
 
 Text, Label, and Divider are not components: plain tags and typography classes cover them.
+
+## Molecules
+| Molecule | Tag | Key inputs |
+|---|---|---|
+| Form field | `<skit-form-field>` | label (required), hint, error (shown once the control is touched and invalid, in a polite live region), for (known control id); gives the projected form atom its id and aria-describedby via `SKIT_FORM_FIELD` |
+| Alert | `<skit-alert>` | tone (info, success, warning, danger), title; danger is `role="alert"`, others `role="status"` |
+| Detail list | `<skit-detail-list>` + `<skit-detail-row>` | row: label; value is projected. A list of list items, not a `<dl>` (custom elements break `<dl>` semantics) |
+| Stepper | `<skit-stepper>` | steps, current (index; `steps.length` = flow finished, all steps checked); `aria-current="step"`, done steps get a check; display only |
+| Insured notice | `<skit-insured-notice>` | insurer (ncua, fdic), variant (full: official sign text for the main page and pages where members open accounts or move money in; short: "Federally insured by NCUA" / "Member FDIC"); text only, the graphic sign is regulator artwork |
+
+## Organisms
+| Organism | Tag | Key inputs |
+|---|---|---|
+| Account card | `<skit-account-card>` | name, number (only last 4 rendered), balance, currency, icon, projectedBalance, balanceLabel, loading; badge is a projected `<skit-badge>` |
+| Money flow | `<skit-money-flow>` | amount, currency, state (idle, sending, done); `slot="from"` / `slot="to"` content |
+| Site footer | `<skit-site-footer>` | linksLabel; `slot="links"` (plain `<a>`), `slot="notice"` (short insured notice), legal `<p>` lines as content; no `<footer>` landmark of its own |
+
+## Templates
+| Template | Tag | Slots |
+|---|---|---|
+| Split page | `<skit-split-page>` | `slot="header|main|aside|actions|footer"`; wide: aside sticky on the right, actions under main; narrow: main, aside, then actions as a bar pinned to the screen bottom; adds `skit-root` |
+
+## Compliance (US credit unions and banks)
+- Deposit insurance: the full official notice on the main page and on pages where members open accounts or move money into them; the short statement in the site footer. Never smaller than the smallest text on the page.
+- Site footer on every page: privacy, security, accessibility and contact links; the institution's legal lines (Equal Housing Lender, NMLS ID and similar) as given by its compliance team.
+- Accessibility target: WCAG 2.2 AA.
+- The kit renders wording and placement; legal sign-off belongs to the institution.
 
 ## Organism notes
 - Account card: account name on the left of the header, badge on the right.

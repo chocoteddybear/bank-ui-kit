@@ -1,0 +1,60 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--skit-spacing) * 4);
+  padding-block: calc(var(--skit-spacing) * 6);
+  color: var(--skit-text-muted);
+  font-family: var(--skit-font-sans);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--skit-spacing) * 4);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--skit-spacing) * 2) calc(var(--skit-spacing) * 5);
+}
+
+/* Links are the app's projected <a> elements; ::ng-deep stays inside :host. */
+:host ::ng-deep .links a {
+  border-radius: 2px;
+  color: var(--skit-text-default);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+  text-decoration-line: none;
+}
+
+:host ::ng-deep .links a:hover {
+  text-decoration-line: underline;
+  text-underline-offset: 0.2em;
+}
+
+:host ::ng-deep .links a:focus-visible {
+  outline: var(--skit-focus-ring-width) solid var(--skit-focus-ring-color);
+  outline-offset: var(--skit-focus-ring-offset);
+}
+
+.notice:empty,
+.legal:empty {
+  display: none;
+}
+
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--skit-spacing) * 2);
+  font-size: var(--skit-text-xs);
+  line-height: var(--skit-text-xs--line-height);
+}
+
+:host ::ng-deep .legal p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}

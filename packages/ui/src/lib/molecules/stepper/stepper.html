@@ -1,0 +1,23 @@
+<ol class="list">
+  @for (step of steps(); track $index) {
+    <li
+      class="step"
+      [attr.data-state]="$index < current() ? 'done' : $index === current() ? 'current' : 'upcoming'"
+      [attr.aria-current]="$index === current() ? 'step' : null"
+    >
+      <span class="marker" aria-hidden="true">
+        @if ($index < current()) {
+          <skit-icon name="check" size="sm" />
+        } @else {
+          {{ $index + 1 }}
+        }
+      </span>
+      <span class="label">
+        {{ step }}
+        @if ($index < current()) {
+          <span class="visually-hidden">(completed)</span>
+        }
+      </span>
+    </li>
+  }
+</ol>

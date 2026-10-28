@@ -1,0 +1,9 @@
+<skit-icon class="icon" name="shield" [size]="variant() === 'full' ? 'lg' : 'sm'" />
+@if (variant() === 'full') {
+  <p class="text">
+    <span class="statement">{{ text().full[0] }}</span>
+    <span class="agency">{{ text().full[1] }}</span>
+  </p>
+} @else {
+  <p class="text">{{ text().short }}</p>
+}

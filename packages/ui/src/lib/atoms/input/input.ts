@@ -1,7 +1,7 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, numberAttribute, signal } from '@angular/core';
 import { SkitFormControlBase } from '../shared/form-control-base';
 
-export type SkitInputType = 'text' | 'email' | 'password' | 'tel' | 'url' | 'search' | 'number';
+export type SkitInputType = 'text' | 'email' | 'password' | 'tel' | 'url' | 'search' | 'number' | 'date';
 export type SkitInputSize = 'sm' | 'md' | 'lg';
 export type SkitInputMode = 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
 

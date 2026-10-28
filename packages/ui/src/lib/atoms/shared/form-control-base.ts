@@ -1,5 +1,6 @@
 import { booleanAttribute, computed, Directive, DoCheck, inject, input, signal, WritableSignal } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { SKIT_FORM_FIELD } from './form-field-context';
 
 /**
  * Shared Angular-forms plumbing for the form atoms: ControlValueAccessor, disabled state from both the
@@ -23,6 +24,14 @@ export abstract class SkitFormControlBase<T> implements ControlValueAccessor, Do
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string | undefined>(undefined, { alias: 'aria-label' });
   readonly ariaDescribedby = input<string | undefined>(undefined, { alias: 'aria-describedby' });
+
+  private readonly field = inject(SKIT_FORM_FIELD, { optional: true });
+  /** An explicit id wins; otherwise a wrapping field supplies one. */
+  protected readonly controlId = computed(() => this.id() ?? this.field?.controlId());
+  /** Explicit and field descriptions are combined, so an app can add its own hint next to the field's. */
+  protected readonly describedBy = computed(
+    () => [this.ariaDescribedby(), this.field?.describedBy()].filter(Boolean).join(' ') || undefined,
+  );
 
   /** The form value, as Angular forms see it. */
   protected abstract readonly model: WritableSignal<T>;

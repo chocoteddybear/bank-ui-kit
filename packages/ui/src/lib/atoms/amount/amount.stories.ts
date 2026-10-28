@@ -21,7 +21,8 @@ const meta: Meta<SkitAmount> = {
     docs: {
       description: {
         component:
-          '`<skit-amount>` formats money in the app locale and always shows the sign (`+$3,200.00`, `-$84.20`). ' +
+          '`<skit-amount>` formats money in the app locale and by default always shows the sign (`+$3,200.00`, `-$84.20`). ' +
+          'For balances and neutral sums (a transfer amount, a total) use `sign="negative"`: only a minus is shown. ' +
           'It is never red or green: direction comes from the sign. Screen readers hear "plus" or "minus" in words. ' +
           'Pass decimal strings ("1234.50") for exact amounts; numbers are limited by floating point.',
       },
@@ -31,8 +32,9 @@ const meta: Meta<SkitAmount> = {
     value: { control: 'text' },
     currency: { control: 'inline-radio', options: ['USD', 'EUR', 'GBP', 'JPY', 'CHF'] },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    sign: { control: 'inline-radio', options: ['always', 'negative'] },
   },
-  args: { value: '-84.20', currency: 'USD', size: 'md' },
+  args: { value: '-84.20', currency: 'USD', size: 'md', sign: 'always' },
 };
 export default meta;
 
@@ -41,7 +43,7 @@ type Story = StoryObj<SkitAmount>;
 export const Playground: Story = {
   render: (args) => ({
     props: args,
-    template: `<div class="skit-root skit:bg-background skit:p-8"><skit-amount [value]="value" [currency]="currency" [size]="size" /></div>`,
+    template: `<div class="skit-root skit:bg-background skit:p-8"><skit-amount [value]="value" [currency]="currency" [size]="size" [sign]="sign" /></div>`,
   }),
 };
 
@@ -51,7 +53,8 @@ export const Sizes: Story = {
     props: { modes: MODES },
     template: inBothModes(`
       <div class="skit:flex skit:flex-col skit:gap-3">
-        <span><skit-amount value="12480.32" currency="USD" size="lg" /> <small class="skit:text-muted">lg · balance</small></span>
+        <span><skit-amount value="12480.32" currency="USD" size="lg" sign="negative" /> <small class="skit:text-muted">lg · balance, sign="negative"</small></span>
+        <span><skit-amount value="-842.17" currency="USD" size="lg" sign="negative" /> <small class="skit:text-muted">overdrawn balance keeps the minus</small></span>
         <span><skit-amount value="-84.20" currency="USD" /> <small class="skit:text-muted">md</small></span>
         <span><skit-amount value="3200" currency="EUR" size="sm" /> <small class="skit:text-muted">sm</small></span>
         <span><skit-amount value="0" currency="USD" /> <small class="skit:text-muted">zero has no sign</small></span>

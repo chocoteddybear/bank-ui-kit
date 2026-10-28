@@ -1,0 +1,7 @@
+<div class="top">
+  <nav class="links" [attr.aria-label]="linksLabel()">
+    <ng-content select="[slot=links]" />
+  </nav>
+  <div class="notice"><ng-content select="[slot=notice]" /></div>
+</div>
+<div class="legal"><ng-content /></div>

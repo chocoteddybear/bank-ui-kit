@@ -1,0 +1,83 @@
+/* A surface card with the standard 1px border; depth from surface color, no shadow. */
+:host {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--skit-spacing) * 5);
+  padding: calc(var(--skit-spacing) * 5);
+  border: 1px solid var(--skit-border);
+  border-radius: var(--skit-account-card-radius, var(--skit-radius-lg));
+  background: var(--skit-surface);
+  color: var(--skit-text-default);
+  font-family: var(--skit-font-sans);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--skit-spacing) * 3);
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--skit-spacing) * 10);
+  height: calc(var(--skit-spacing) * 10);
+  border-radius: var(--skit-radius-full);
+  background: var(--skit-tint-bg);
+  color: var(--skit-tint-text);
+}
+
+.identity {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(var(--skit-spacing) * 0.5);
+  min-width: 0;
+}
+
+.name {
+  overflow: hidden;
+  font-size: var(--skit-text-base);
+  line-height: var(--skit-text-base--line-height);
+  font-weight: var(--skit-font-weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.number,
+.caption {
+  color: var(--skit-text-muted);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+.balance {
+  display: flex;
+  flex-direction: column;
+  gap: var(--skit-spacing);
+}
+
+.projected {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--skit-spacing) * 1.5);
+  color: var(--skit-text-muted);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

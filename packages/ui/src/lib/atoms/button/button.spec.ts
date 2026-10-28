@@ -90,6 +90,11 @@ describe('SkitButton', () => {
     expect(getComputedStyle(host).display).toBe('inline-block');
   });
 
+  it('fills its host, so the page can stretch it to full width', async () => {
+    const { button } = await setup();
+    expect(getComputedStyle(button).width).toBe('100%');
+  });
+
   describe('forwards type', () => {
     it('defaults to type="button" so it never submits a form by accident', async () => {
       const { button, host } = await setupDefaults();
@@ -126,6 +131,57 @@ describe('SkitButton', () => {
       button.click();
       expect(host.clicks).toBe(0);
       expect(host.submits).toBe(0);
+    });
+  });
+
+  describe('forwards form', () => {
+    @Component({
+      imports: [SkitButton],
+      template: `
+        <form id="transfer" (submit)="onSubmit($event)"></form>
+        <skit-button type="submit" form="transfer">Review</skit-button>
+      `,
+    })
+    class OutsideFormHost {
+      submits = 0;
+
+      onSubmit(event: Event): void {
+        event.preventDefault();
+        this.submits++;
+      }
+    }
+
+    async function setupOutside() {
+      const fixture = TestBed.createComponent(OutsideFormHost);
+      await fixture.whenStable();
+      const element: HTMLElement = fixture.nativeElement;
+      return {
+        host: fixture.componentInstance,
+        skitButton: element.querySelector('skit-button') as HTMLElement,
+        button: element.querySelector('button') as HTMLButtonElement,
+      };
+    }
+
+    it('associates the inner button with the form by id', async () => {
+      const { button } = await setupOutside();
+      expect(button.getAttribute('form')).toBe('transfer');
+      expect(button.form?.id).toBe('transfer');
+    });
+
+    it('submits that form from outside it', async () => {
+      const { button, host } = await setupOutside();
+      button.click();
+      expect(host.submits).toBe(1);
+    });
+
+    it('removes it from the host element', async () => {
+      const { skitButton } = await setupOutside();
+      expect(skitButton.hasAttribute('form')).toBe(false);
+    });
+
+    it('sets no form attribute by default', async () => {
+      const { button } = await setupDefaults();
+      expect(button.hasAttribute('form')).toBe(false);
     });
   });
 

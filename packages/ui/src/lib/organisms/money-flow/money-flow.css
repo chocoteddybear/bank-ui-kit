@@ -1,0 +1,115 @@
+:host {
+  --_line: var(--skit-border);
+
+  display: flex;
+  flex-direction: column;
+  font-family: var(--skit-font-sans);
+}
+
+:host([data-state='sending']),
+:host([data-state='done']) {
+  --_line: var(--skit-primary-600);
+}
+
+.end {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--skit-spacing) * 2);
+}
+
+.caption {
+  color: var(--skit-text-muted);
+  font-size: var(--skit-text-xs);
+  line-height: var(--skit-text-xs--line-height);
+  font-weight: var(--skit-font-weight-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.connector {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: calc(var(--skit-spacing) * 6) 0;
+}
+
+.track {
+  position: absolute;
+  inset: 0 auto 0 50%;
+  width: 0;
+  border-left: 2px dashed var(--_line);
+  transition: border-color var(--skit-duration-base) var(--skit-easing);
+}
+
+:host([data-state='done']) .track {
+  border-left-style: solid;
+}
+
+/* Dots travel down the line while sending: the money on its way. */
+.dot {
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--skit-radius-full);
+  background: var(--skit-primary-600);
+  opacity: 0;
+}
+
+:host([data-state='sending']) .dot {
+  animation: skit-money-flow-travel 1.2s var(--skit-easing) infinite;
+}
+
+:host([data-state='sending']) .dot:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+:host([data-state='sending']) .dot:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+@keyframes skit-money-flow-travel {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 8px);
+    opacity: 0;
+  }
+}
+
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--skit-spacing) * 2);
+  min-height: calc(var(--skit-spacing) * 10);
+  box-sizing: border-box;
+  padding: 0 calc(var(--skit-spacing) * 4);
+  border: 1px solid var(--_line);
+  border-radius: var(--skit-radius-full);
+  background: var(--skit-surface);
+  transition: border-color var(--skit-duration-base) var(--skit-easing);
+}
+
+.pill-icon {
+  color: var(--skit-tint-text);
+}
+
+.empty {
+  color: var(--skit-text-muted);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host([data-state='sending']) .dot {
+    animation: none;
+  }
+}

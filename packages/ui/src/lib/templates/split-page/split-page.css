@@ -1,0 +1,102 @@
+:host {
+  --_max-width: var(--skit-page-max-width, calc(var(--skit-spacing) * 288));
+  --_gutter: calc(var(--skit-spacing) * 4);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--skit-background);
+  color: var(--skit-text-default);
+}
+
+.header {
+  border-bottom: 1px solid var(--skit-border);
+  background: var(--skit-surface);
+}
+
+.header,
+.footer {
+  padding-inline: max(var(--_gutter), (100% - var(--_max-width)) / 2);
+}
+
+.body {
+  display: grid;
+  flex: 1;
+  gap: calc(var(--skit-spacing) * 6);
+  width: 100%;
+  max-width: calc(var(--_max-width) + 2 * var(--_gutter));
+  margin-inline: auto;
+  padding: calc(var(--skit-spacing) * 6) var(--_gutter);
+  box-sizing: border-box;
+  /* Narrow: the task first, then the summary, then the actions as the last thing on the page. */
+  grid-template-areas:
+    'main'
+    'aside'
+    'actions';
+  /* The body grows to push the footer down; rows must not stretch with it. */
+  align-content: start;
+}
+
+.main {
+  grid-area: main;
+  min-width: 0;
+}
+
+.aside {
+  grid-area: aside;
+  min-width: 0;
+}
+
+.actions {
+  grid-area: actions;
+  min-width: 0;
+}
+
+/* Narrow: a bar pinned to the bottom of the screen, so the next step is always within thumb reach. */
+@media (max-width: 63.99rem) {
+  .actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    margin-inline: calc(var(--_gutter) * -1);
+    margin-bottom: calc(var(--skit-spacing) * -6);
+    padding: calc(var(--skit-spacing) * 3) var(--_gutter)
+      max(calc(var(--skit-spacing) * 3), env(safe-area-inset-bottom));
+    border-top: 1px solid var(--skit-border);
+    background: var(--skit-surface);
+  }
+}
+
+.footer {
+  border-top: 1px solid var(--skit-border);
+}
+
+.header:empty,
+.footer:empty,
+.actions:empty {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  :host {
+    --_gutter: calc(var(--skit-spacing) * 8);
+  }
+
+  .body {
+    gap: calc(var(--skit-spacing) * 5) calc(var(--skit-spacing) * 8);
+    padding-block: calc(var(--skit-spacing) * 8);
+    grid-template-areas:
+      'main aside'
+      'actions aside';
+    grid-template-columns: minmax(0, 1fr) var(--skit-split-page-aside-width, calc(var(--skit-spacing) * 96));
+    /* A tall aside spans both rows; its extra height goes to the second row, so actions stay under main. */
+    grid-template-rows: auto 1fr;
+    align-items: start;
+  }
+
+  .aside {
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: calc(var(--skit-spacing) * 8);
+  }
+}

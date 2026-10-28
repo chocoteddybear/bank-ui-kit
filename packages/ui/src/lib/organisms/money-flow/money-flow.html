@@ -1,0 +1,25 @@
+<div class="end">
+  <span class="caption">{{ fromLabel() }}</span>
+  <ng-content select="[slot=from]" />
+</div>
+
+<div class="connector">
+  <span class="track" aria-hidden="true">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </span>
+  <span class="pill">
+    <skit-icon [name]="state() === 'done' ? 'check' : 'arrow-down'" size="sm" class="pill-icon" />
+    @if (hasAmount()) {
+      <skit-amount [value]="amount()!" [currency]="currency()" sign="negative" />
+    } @else {
+      <span class="empty">{{ emptyText() }}</span>
+    }
+  </span>
+</div>
+
+<div class="end">
+  <span class="caption">{{ toLabel() }}</span>
+  <ng-content select="[slot=to]" />
+</div>

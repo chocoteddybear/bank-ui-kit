@@ -17,6 +17,8 @@
   position: relative;
   box-sizing: border-box;
   display: inline-flex;
+  /* Fills the host: sized by its content by default, full width when the page stretches <skit-button>. */
+  width: 100%;
   align-items: center;
   justify-content: center;
   margin: 0;

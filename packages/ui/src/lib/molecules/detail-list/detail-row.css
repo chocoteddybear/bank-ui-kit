@@ -1,0 +1,28 @@
+/* Rows are separated by the border role; the last row closes without a line. */
+:host {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--skit-spacing) * 4);
+  padding: calc(var(--skit-spacing) * 3) 0;
+  border-bottom: 1px solid var(--skit-border);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+}
+
+:host(:last-child) {
+  border-bottom: 0;
+}
+
+.label {
+  flex-shrink: 0;
+  color: var(--skit-text-muted);
+}
+
+.value {
+  min-width: 0;
+  color: var(--skit-text-default);
+  font-weight: var(--skit-font-weight-medium);
+  text-align: end;
+  overflow-wrap: anywhere;
+}

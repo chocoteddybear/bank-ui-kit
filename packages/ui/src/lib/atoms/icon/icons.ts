@@ -1,4 +1,5 @@
 import {
+  LucideArrowDown,
   LucideArrowDownLeft,
   LucideArrowLeft,
   LucideArrowLeftRight,
@@ -57,6 +58,7 @@ import {
  * icons, and swapping the icon library later means changing this map, not the apps.
  */
 export const SKIT_ICONS = {
+  'arrow-down': LucideArrowDown.icon,
   'arrow-down-left': LucideArrowDownLeft.icon,
   'arrow-left': LucideArrowLeft.icon,
   'arrow-left-right': LucideArrowLeftRight.icon,

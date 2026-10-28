@@ -25,6 +25,8 @@ Pick one stylesheet:
 | `@vladlev/skit/styles.css` | Any app. Precompiled: tokens, Inter, plain-tag styles and the public `skit:` classes. No Tailwind needed. |
 | `@vladlev/skit/tailwind.css` + `@vladlev/skit/fonts.css` | Tailwind v4 apps that want any `skit:` utility in their own templates. Add `tailwind.css` as its **own** stylesheet entry, not inside the app's Tailwind entry. |
 
+Also load Angular CDK's `@angular/cdk/a11y-prebuilt.css` (skip it if your app already includes the CDK or Angular Material styles). `skit-spinner` announces through the CDK `LiveAnnouncer`, and without that stylesheet the announcement text is visible on the page.
+
 Then opt a page in with `class="skit-root"`.
 
 Theme attributes: `data-primary="indigo|teal|violet"`, `data-theme="light|dark"` (omit for system).

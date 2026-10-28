@@ -3,9 +3,17 @@
 }
 
 .field {
-  padding-right: calc(var(--_padding-x) + var(--skit-spacing) * 6);
+  padding-right: calc(var(--_padding-x) + var(--skit-spacing) * 7);
   /* The base-select rendering doesn't center its content like the classic select does. */
   align-content: center;
+  /*
+   * One line. Long values are cut at the content edge, so they never run under the chevron in the right
+   * padding (a plain overflow clip stops at the padding edge). The OS select adds its own ellipsis.
+   */
+  overflow: clip;
+  overflow-clip-margin: content-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -25,52 +33,45 @@
 }
 
 /*
- * The open list: styled where the browser supports it (Chromium 135+), and only with a mouse,
- * so phones keep their native picker. Elsewhere the OS list is used.
+ * The open list: styled where the browser supports it (Chromium 135+, desktop and Android), anchored
+ * under the field and flipped above it when there is no room. Elsewhere (iOS Safari) the OS list is used.
  * Options are the app's projected content, hence ::ng-deep, kept inside :host.
  */
-@media (pointer: fine) {
-  @supports (appearance: base-select) {
-    .field,
-    .field::picker(select) {
-      appearance: base-select;
-    }
+@supports (appearance: base-select) {
+  .field,
+  .field::picker(select) {
+    appearance: base-select;
+  }
 
-    .field::picker-icon {
-      display: none;
-    }
+  .field::picker-icon {
+    display: none;
+  }
 
-    .field::picker(select) {
-      box-sizing: border-box;
-      margin-top: var(--skit-spacing);
-      padding: var(--skit-spacing);
-      border: 1px solid var(--skit-border);
-      border-radius: var(--skit-radius-md);
-      background: var(--skit-surface);
-      color: var(--skit-text-default);
-    }
+  :host ::ng-deep option {
+    padding: calc(var(--skit-spacing) * 2) calc(var(--skit-spacing) * 3);
+    border-radius: var(--skit-radius-sm);
+    font-size: var(--_font-size);
+    line-height: var(--_line-height);
+  }
 
-    :host ::ng-deep option {
-      padding: calc(var(--skit-spacing) * 2) calc(var(--skit-spacing) * 3);
-      border-radius: var(--skit-radius-sm);
-      font-size: var(--_font-size);
-      line-height: var(--_line-height);
-    }
+  :host ::ng-deep option:hover,
+  :host ::ng-deep option:focus-visible {
+    background: color-mix(in oklab, transparent, var(--skit-text-default) 6%);
+    outline: none;
+  }
 
-    :host ::ng-deep option:hover,
-    :host ::ng-deep option:focus-visible {
-      background: color-mix(in oklab, transparent, var(--skit-text-default) 6%);
-      outline: none;
-    }
+  :host ::ng-deep option:checked {
+    background: var(--skit-tint-bg);
+    color: var(--skit-tint-text);
+    font-weight: var(--skit-font-weight-medium);
+  }
 
-    :host ::ng-deep option:checked {
-      background: var(--skit-tint-bg);
-      color: var(--skit-tint-text);
-      font-weight: var(--skit-font-weight-medium);
-    }
+  :host ::ng-deep option:disabled {
+    color: var(--skit-text-muted);
+    opacity: 0.6;
+  }
 
-    :host ::ng-deep option::checkmark {
-      display: none;
-    }
+  :host ::ng-deep option::checkmark {
+    display: none;
   }
 }

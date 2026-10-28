@@ -2,22 +2,24 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Component, LOCALE_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { SkitAmount, SkitAmountSize, SkitAmountValue } from './amount';
+import { SkitAmount, SkitAmountSign, SkitAmountSize, SkitAmountValue } from './amount';
 
 @Component({
   imports: [SkitAmount],
-  template: `<skit-amount [value]="value()" [currency]="currency()" [size]="size()" />`,
+  template: `<skit-amount [value]="value()" [currency]="currency()" [size]="size()" [sign]="sign()" />`,
 })
 class Host {
+  readonly sign = signal<SkitAmountSign>('always');
   readonly value = signal<SkitAmountValue>(0);
   readonly currency = signal('USD');
   readonly size = signal<SkitAmountSize>('md');
 }
 
-async function render(value: SkitAmountValue, currency = 'USD', size?: SkitAmountSize) {
+async function render(value: SkitAmountValue, currency = 'USD', size?: SkitAmountSize, sign?: SkitAmountSign) {
   const fixture = TestBed.createComponent(Host);
   const host = fixture.componentInstance;
   host.value.set(value);
+  if (sign) host.sign.set(sign);
   host.currency.set(currency);
   if (size) host.size.set(size);
   await fixture.whenStable();
@@ -46,6 +48,26 @@ describe('SkitAmount', () => {
     it('shows no sign for zero', async () => {
       const { visible } = await render(0);
       expect(visible()).toBe('$0.00');
+    });
+  });
+
+  describe('sign="negative" (balances, neutral sums)', () => {
+    it.each<[SkitAmountValue, string, string]>([
+      [3200, '$3,200.00', '$3,200.00'],
+      [-84.2, '-$84.20', 'minus $84.20'],
+      [0, '$0.00', '$0.00'],
+    ])('%s shows "%s" and is read as "%s"', async (value, shown, read) => {
+      const { visible, spoken } = await render(value, 'USD', undefined, 'negative');
+      expect(visible()).toBe(shown);
+      expect(spoken()).toBe(read);
+    });
+
+    it('follows a change of the sign input', async () => {
+      const { fixture, host, visible } = await render(3200);
+      expect(visible()).toBe('+$3,200.00');
+      host.sign.set('negative');
+      await fixture.whenStable();
+      expect(visible()).toBe('$3,200.00');
     });
   });
 

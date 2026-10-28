@@ -24,6 +24,7 @@ export type SkitButtonType = 'button' | 'submit' | 'reset';
   host: {
     // The label belongs on the inner <button>; on the role-less host element it would be invalid ARIA.
     '[attr.aria-label]': 'null',
+    '[attr.form]': 'null',
   },
 })
 export class SkitButton {
@@ -33,10 +34,13 @@ export class SkitButton {
   /** Defaults to "button" so a kit button inside a form never submits it by accident. */
   readonly type = input<SkitButtonType>('button');
   readonly disabled = input(false, { transform: booleanAttribute });
+  /** Id of the <form> this button belongs to, for a submit button placed outside the form (e.g. a sticky action bar). */
+  readonly form = input<string>();
   /** Required for icon-only buttons, which have no visible text to name them. */
   readonly ariaLabel = input<string | undefined>(undefined, { alias: 'aria-label' });
 
-  private readonly label = viewChild.required<ElementRef<HTMLElement>>('label');
+  // Not named `label`: Storybook writes story args onto the instance, and a "label" arg would replace it.
+  private readonly labelRef = viewChild.required<ElementRef<HTMLElement>>('label');
   /** True when the content is only an icon (no text): the button then becomes a circle. */
   protected readonly iconOnly = signal(false);
 
@@ -60,7 +64,7 @@ export class SkitButton {
     destroyRef.onDestroy(() => host.removeEventListener('click', block, { capture: true }));
 
     afterNextRender(() => {
-      const label = this.label().nativeElement;
+      const label = this.labelRef().nativeElement;
       const update = (): void =>
         this.iconOnly.set(label.children.length > 0 && (label.textContent ?? '').trim() === '');
       update();

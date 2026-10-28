@@ -21,7 +21,7 @@ const meta: Meta<SkitInput> = {
     },
   },
   argTypes: {
-    type: { control: 'select', options: ['text', 'email', 'password', 'tel', 'url', 'search', 'number'] },
+    type: { control: 'select', options: ['text', 'email', 'password', 'tel', 'url', 'search', 'number', 'date'] },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     inputmode: { control: 'select', options: [undefined, 'decimal', 'numeric', 'tel', 'email'] },
     placeholder: { control: 'text' },

@@ -1,0 +1,7 @@
+<skit-icon class="icon" [name]="icon()" />
+<div class="content">
+  @if (title()) {
+    <p class="title">{{ title() }}</p>
+  }
+  <div class="body"><ng-content /></div>
+</div>

@@ -1,0 +1,11 @@
+<label class="label" [attr.for]="controlId()">{{ label() }}</label>
+<ng-content />
+@if (hint()) {
+  <small class="hint" [id]="hintId">{{ hint() }}</small>
+}
+<!-- Always rendered, so the live region exists before the message is added and the error is announced. -->
+<div aria-live="polite">
+  @if (showError()) {
+    <small class="error" [id]="errorId"><skit-icon name="error" size="sm" />{{ error() }}</small>
+  }
+</div>

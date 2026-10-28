@@ -1,0 +1,35 @@
+@if (loading()) {
+  <div class="header">
+    <skit-skeleton shape="circle" />
+    <div class="identity">
+      <skit-skeleton width="60%" />
+      <skit-skeleton width="30%" />
+    </div>
+  </div>
+  <div class="balance">
+    <skit-skeleton width="40%" />
+    <skit-skeleton [height]="32" width="55%" />
+  </div>
+} @else {
+  <div class="header">
+    <span class="icon"><skit-icon [name]="icon()" /></span>
+    <div class="identity">
+      <span class="name">{{ name() }}</span>
+      <span class="number">
+        <span aria-hidden="true">•• {{ lastFour() }}</span>
+        <span class="visually-hidden">ending in {{ lastFour() }}</span>
+      </span>
+    </div>
+    <ng-content select="skit-badge" />
+  </div>
+  <div class="balance">
+    <span class="caption">{{ balanceLabel() }}</span>
+    <skit-amount [value]="balance() ?? ''" [currency]="currency()" size="lg" sign="negative" />
+    @if (projectedBalance() !== undefined) {
+      <span class="projected">
+        <skit-icon name="arrow-right" size="sm" />
+        <span>After: <skit-amount [value]="projectedBalance()!" [currency]="currency()" size="sm" sign="negative" /></span>
+      </span>
+    }
+  </div>
+}

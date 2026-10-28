@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--skit-spacing) * 2);
+  color: var(--skit-text-default);
+  font-family: var(--skit-font-sans);
+  font-size: var(--skit-text-xs);
+  line-height: var(--skit-text-xs--line-height);
+}
+
+:host([data-variant='full']) {
+  box-sizing: border-box;
+  gap: calc(var(--skit-spacing) * 3);
+  padding: calc(var(--skit-spacing) * 3) calc(var(--skit-spacing) * 4);
+  border: 1px solid var(--skit-border);
+  /* A standalone block like a card, so it takes the card radius. */
+  border-radius: var(--skit-insured-notice-radius, var(--skit-radius-lg));
+  background: var(--skit-surface);
+}
+
+.icon {
+  color: var(--skit-tint-text);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--skit-spacing) * 0.5);
+  margin: 0;
+}
+
+:host([data-variant='short']) .text {
+  font-weight: var(--skit-font-weight-medium);
+}
+
+.agency {
+  font-weight: var(--skit-font-weight-semibold);
+}

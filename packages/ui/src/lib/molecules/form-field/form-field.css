@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--skit-font-sans);
+}
+
+.label {
+  margin-bottom: calc(var(--skit-spacing) * 1.5);
+  color: var(--skit-text-default);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+  font-weight: var(--skit-font-weight-medium);
+}
+
+.hint,
+.error {
+  /* Margins, not a flex gap: the always-present live region must not add space while empty. */
+  margin-top: calc(var(--skit-spacing) * 1.5);
+  font-size: var(--skit-text-xs);
+  line-height: var(--skit-text-xs--line-height);
+}
+
+.hint {
+  color: var(--skit-text-muted);
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: var(--skit-spacing);
+  color: var(--skit-danger-text);
+}

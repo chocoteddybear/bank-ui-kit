@@ -1,0 +1,113 @@
+:host {
+  display: block;
+  font-family: var(--skit-font-sans);
+  container-type: inline-size;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--skit-spacing) * 2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: calc(var(--skit-spacing) * 2);
+  min-width: 0;
+  /* Inside .skit-root the kit's list styles space out li + li; steps sit on one line. */
+  margin: 0;
+  color: var(--skit-text-muted);
+  font-size: var(--skit-text-sm);
+  line-height: var(--skit-text-sm--line-height);
+  font-weight: var(--skit-font-weight-medium);
+}
+
+.step:last-child {
+  flex: 0 0 auto;
+}
+
+/* Connector to the next step: filled once this step is done. */
+.step:not(:last-child)::after {
+  content: '';
+  flex: 1;
+  min-width: calc(var(--skit-spacing) * 2);
+  height: 2px;
+  border-radius: var(--skit-radius-full);
+  background: var(--skit-border);
+  transition: background-color var(--skit-duration-base) var(--skit-easing);
+}
+
+.step[data-state='done']::after {
+  background: var(--skit-primary-600);
+}
+
+.marker {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--skit-spacing) * 7);
+  height: calc(var(--skit-spacing) * 7);
+  border: 1.5px solid var(--skit-border);
+  border-radius: var(--skit-radius-full);
+  background: var(--skit-surface);
+  font-size: var(--skit-text-xs);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background-color var(--skit-duration-base) var(--skit-easing),
+    border-color var(--skit-duration-base) var(--skit-easing);
+}
+
+.step[data-state='current'] {
+  color: var(--skit-text-default);
+}
+
+.step[data-state='current'] .marker {
+  border-color: var(--skit-primary-600);
+  color: var(--skit-tint-text);
+  background: var(--skit-tint-bg);
+}
+
+.step[data-state='done'] {
+  color: var(--skit-text-default);
+}
+
+.step[data-state='done'] .marker {
+  border-color: var(--skit-primary-600);
+  background: var(--skit-primary-600);
+  color: var(--skit-white);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* Narrow containers: only the current step keeps its label, the rest are numbered markers. */
+@container (max-width: 480px) {
+  /* Once the flow is finished there is no current step, so the last label stays as the summary. */
+  .step:not([data-state='current'], :last-child[data-state='done']) .label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

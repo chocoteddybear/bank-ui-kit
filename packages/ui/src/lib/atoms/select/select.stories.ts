@@ -19,9 +19,10 @@ const meta: Meta<SkitSelect> = {
     docs: {
       description: {
         component:
-          '`<skit-select>` wraps a native `<select>`: keyboard, screen readers and positioning come from the browser, ' +
-          'and phones keep their native picker. Put `<option>` elements inside it. In Chromium 135+ with a mouse, ' +
-          'the open list is styled too (`appearance: base-select`); other browsers show the OS list. ' +
+          '`<skit-select>` wraps a native `<select>`: keyboard and screen readers come from the browser. ' +
+          'Put `<option>` elements inside it. In Chromium 135+ (desktop and Android) the open list is styled too ' +
+          '(`appearance: base-select`), anchored under the field and flipped above it when there is no room; ' +
+          'other browsers (iOS Safari) show the OS list. One line: long values are cut before the chevron, so keep labels short. ' +
           'Options may arrive after the value (e.g. from an API); the selection is kept.',
       },
     },
