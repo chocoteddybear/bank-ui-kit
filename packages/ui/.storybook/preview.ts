@@ -1,5 +1,7 @@
 import type { Decorator, Preview } from '@storybook/angular-vite';
 import type { SkitColorMode, SkitPrimaryPreset } from '../src/public-api';
+// Not in storybook.css: Tailwind inlines @fontsource without rebasing url(./files/...), so the built Storybook 404s on fonts.
+import '../src/lib/tokens/fonts.css';
 
 const withSkitTheme: Decorator = (story, context) => {
   const root = document.documentElement;

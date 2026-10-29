@@ -1,7 +1,6 @@
 @import '../src/lib/tokens/tailwind.css';
 /* Storybook only: the kit itself never ships a global reset. */
 @import 'tailwindcss/preflight.css' layer(base);
-@import '../src/lib/tokens/fonts.css';
 @import '@angular/cdk/a11y-prebuilt.css';
 
 @source '../src';
