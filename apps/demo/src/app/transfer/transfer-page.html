@@ -1,0 +1,374 @@
+<a class="app-skip" href="#main-content">Skip to transfer form</a>
+
+<skit-split-page>
+  <div
+    slot="header"
+    class="skit:flex skit:min-h-16 skit:flex-wrap skit:items-center skit:justify-between skit:gap-x-6 skit:gap-y-3 skit:py-3"
+  >
+    <div class="skit:flex skit:items-baseline skit:gap-2">
+      <span class="app-wordmark skit:text-title">Navy Federal</span>
+      <span class="skit:hidden skit:text-body-sm skit:text-muted skit:sm:inline">Credit Union</span>
+      <skit-badge class="skit:ml-1">Concept</skit-badge>
+    </div>
+    <div
+      class="skit:order-3 skit:flex skit:w-full skit:flex-wrap skit:items-center skit:gap-4 skit:md:order-2 skit:md:ml-auto skit:md:w-auto"
+    >
+      <skit-switch [formControl]="brand">Navy Federal theme</skit-switch>
+      <skit-select size="sm" [formControl]="mode" aria-label="Color mode" class="skit:w-28">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </skit-select>
+    </div>
+    <skit-avatar name="Alex Morgan" size="sm" class="skit:order-2 skit:md:order-3" />
+  </div>
+
+  <div
+    slot="main"
+    id="main-content"
+    tabindex="-1"
+    class="app-main skit:flex skit:flex-col skit:gap-6"
+  >
+    <div>
+      <h1 class="skit:mb-1">Transfer money</h1>
+      <p class="skit:mb-0 skit:text-muted">Move money between your Navy Federal accounts.</p>
+    </div>
+
+    <skit-stepper [steps]="stepLabels" [current]="stepperCurrent()" />
+
+    <section
+      class="skit:rounded-lg skit:border skit:bg-surface skit:p-5 skit:sm:p-6"
+      aria-labelledby="step-title"
+    >
+      @switch (step()) {
+        @case ('details') {
+          <h2 id="step-title" tabindex="-1" class="app-step-title skit:text-title">
+            Transfer details
+          </h2>
+
+          @if (summary().length) {
+            <skit-alert
+              id="error-summary"
+              tabindex="-1"
+              tone="danger"
+              class="skit:mb-5"
+              [title]="
+                summary().length === 1
+                  ? 'Fix 1 problem to continue'
+                  : 'Fix ' + summary().length + ' problems to continue'
+              "
+            >
+              <ul class="skit:m-0 skit:ps-5">
+                @for (problem of summary(); track problem.id) {
+                  <li>
+                    <a [href]="'#' + problem.id" (click)="focusField($event, problem.id)">{{
+                      problem.message
+                    }}</a>
+                  </li>
+                }
+              </ul>
+            </skit-alert>
+          }
+
+          <form
+            id="transfer-form"
+            [formGroup]="form"
+            (ngSubmit)="review()"
+            novalidate
+            class="skit:flex skit:flex-col skit:gap-5"
+          >
+            <div class="skit:grid skit:gap-5 skit:sm:grid-cols-2">
+              <skit-form-field label="From" for="from-account">
+                <skit-select formControlName="from">
+                  @for (account of accounts(); track account.id) {
+                    <option [value]="account.id">
+                      {{ account.shortName }} ·· {{ account.number.slice(-4) }}
+                    </option>
+                  }
+                </skit-select>
+              </skit-form-field>
+              <skit-form-field label="To" for="to-account" [error]="error('to')">
+                <skit-select formControlName="to" placeholder="Choose an account">
+                  @for (account of accounts(); track account.id) {
+                    <option
+                      [value]="account.id"
+                      [disabled]="account.id === form.controls.from.value"
+                    >
+                      {{ account.shortName }} ·· {{ account.number.slice(-4) }}
+                    </option>
+                  }
+                </skit-select>
+              </skit-form-field>
+            </div>
+
+            <skit-form-field
+              label="Amount (USD)"
+              for="amount"
+              [hint]="fromAccount() ? 'Available: ' + formatUsd(fromAccount()!.balance) : undefined"
+              [error]="error('amount')"
+            >
+              <skit-input
+                formControlName="amount"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="0.00"
+                size="lg"
+              />
+            </skit-form-field>
+
+            <div class="skit:grid skit:gap-5 skit:sm:grid-cols-2">
+              <skit-form-field label="Date" for="date" [error]="error('date')">
+                <skit-input formControlName="date" type="date" />
+              </skit-form-field>
+              <fieldset
+                class="skit:m-0 skit:flex skit:min-w-0 skit:flex-col skit:gap-2 skit:border-0 skit:p-0"
+              >
+                <legend class="skit:mb-2 skit:text-label">Frequency</legend>
+                <skit-radio formControlName="frequency" name="frequency" value="once"
+                  >One time</skit-radio
+                >
+                <skit-radio formControlName="frequency" name="frequency" value="monthly"
+                  >Every month on this date</skit-radio
+                >
+              </fieldset>
+            </div>
+
+            <skit-form-field
+              label="Memo (optional)"
+              for="memo"
+              [hint]="memoLength() + ' / ' + memoMax + ' · Shown on both statements'"
+              [error]="error('memo')"
+            >
+              <skit-input
+                formControlName="memo"
+                [maxlength]="memoMax"
+                placeholder="e.g. Emergency fund"
+              />
+            </skit-form-field>
+
+            <skit-switch formControlName="emailReceipt">Email me a receipt</skit-switch>
+
+            @if (isScheduled()) {
+              <skit-alert title="Scheduled transfer">
+                Money moves on {{ formatDate(form.controls.date.value) }}. Balances update on that
+                day.
+              </skit-alert>
+            }
+          </form>
+        }
+
+        @case ('done') {
+          @if (receipt(); as done) {
+            <h2 id="step-title" tabindex="-1" class="app-step-title skit:text-title">
+              {{ done.status === 'completed' ? 'Money is on its way' : 'Transfer scheduled' }}
+            </h2>
+            <skit-alert
+              tone="success"
+              [title]="done.status === 'completed' ? 'Transfer complete' : 'Transfer scheduled'"
+            >
+              Confirmation number {{ done.confirmation }}.
+              @if (done.emailReceipt) {
+                A receipt is on its way to your email.
+              }
+            </skit-alert>
+            <skit-detail-list class="skit:mt-4">
+              <skit-detail-row label="Confirmation">{{ done.confirmation }}</skit-detail-row>
+              <skit-detail-row label="From">{{ accountName(done.fromId) }}</skit-detail-row>
+              <skit-detail-row label="To">{{ accountName(done.toId) }}</skit-detail-row>
+              <skit-detail-row label="Amount">
+                <skit-amount
+                  [value]="toDecimal(done.amount)"
+                  currency="USD"
+                  size="sm"
+                  sign="negative"
+                />
+              </skit-detail-row>
+              <skit-detail-row label="Date">{{ formatDate(done.date) }}</skit-detail-row>
+              <skit-detail-row label="Frequency">{{
+                done.frequency === 'once' ? 'One time' : 'Every month'
+              }}</skit-detail-row>
+              <skit-detail-row label="Status">
+                <skit-badge [tone]="done.status === 'completed' ? 'success' : 'info'">
+                  {{ done.status === 'completed' ? 'Completed' : 'Scheduled' }}
+                </skit-badge>
+              </skit-detail-row>
+            </skit-detail-list>
+            <p class="skit:mt-4 skit:mb-0 skit:text-body-sm skit:text-muted">
+              Questions about this transfer, or think there is an error? <a href="#">Contact us</a>
+              and give the confirmation number.
+            </p>
+          }
+        }
+
+        @default {
+          <h2 id="step-title" tabindex="-1" class="app-step-title skit:text-title">
+            Review your transfer
+          </h2>
+          <skit-detail-list>
+            <skit-detail-row label="From">{{
+              accountName(form.controls.from.value)
+            }}</skit-detail-row>
+            <skit-detail-row label="To">{{ accountName(form.controls.to.value) }}</skit-detail-row>
+            <skit-detail-row label="Amount">
+              <skit-amount
+                [value]="amountDecimal() ?? ''"
+                currency="USD"
+                size="sm"
+                sign="negative"
+              />
+            </skit-detail-row>
+            <skit-detail-row label="Date">{{
+              formatDate(form.controls.date.value)
+            }}</skit-detail-row>
+            <skit-detail-row label="Frequency">
+              {{ form.controls.frequency.value === 'once' ? 'One time' : 'Every month' }}
+            </skit-detail-row>
+            @if (form.controls.memo.value.trim()) {
+              <skit-detail-row label="Memo">{{ form.controls.memo.value.trim() }}</skit-detail-row>
+            }
+            <skit-detail-row label="Fee">No fee</skit-detail-row>
+          </skit-detail-list>
+
+          <ul class="app-disclosures skit:mt-4 skit:mb-0 skit:text-caption skit:text-muted">
+            @if (isScheduled()) {
+              <li>This transfer posts on {{ formatDate(form.controls.date.value) }}.</li>
+            } @else {
+              <li>
+                Transfers made before the daily cutoff post today; later transfers post the next
+                business day.
+              </li>
+            }
+            @if (form.controls.frequency.value === 'monthly') {
+              <li>
+                Monthly transfers repeat until you cancel them. You can change or cancel one in
+                Transfers until the day before it posts.
+              </li>
+            }
+            @if (fromAccount()?.savings) {
+              <li>Withdrawals from savings accounts may be limited by your account agreement.</li>
+            }
+            <li>
+              Your rights and responsibilities are described in the
+              <a href="#">Electronic Fund Transfer Agreement and Disclosure</a>.
+            </li>
+          </ul>
+
+          <div class="skit:mt-4 skit:flex skit:flex-col skit:gap-1">
+            <skit-checkbox [formControl]="authorize" aria-describedby="authorize-error">
+              I authorize Navy Federal to make this transfer.
+            </skit-checkbox>
+            @if (authorize.invalid && authorize.touched) {
+              <small id="authorize-error" class="skit:text-danger"
+                >Please confirm to send the transfer.</small
+              >
+            }
+          </div>
+        }
+      }
+    </section>
+  </div>
+
+  <div slot="aside" class="skit:flex skit:flex-col skit:gap-4">
+    <section
+      class="skit:rounded-lg skit:border skit:bg-surface skit:p-5"
+      aria-labelledby="preview-title"
+    >
+      <h2 id="preview-title" class="skit:text-subtitle">Transfer preview</h2>
+      <skit-money-flow [amount]="amountDecimal()" currency="USD" [state]="flowState()">
+        @if (loading() || !fromAccount()) {
+          <skit-account-card slot="from" name="" number="" currency="USD" loading />
+        } @else {
+          <skit-account-card
+            slot="from"
+            [name]="fromAccount()!.name"
+            [number]="fromAccount()!.number"
+            [icon]="fromAccount()!.icon"
+            [balance]="toDecimal(fromAccount()!.balance)"
+            [projectedBalance]="projection()?.from"
+            currency="USD"
+          >
+            @if (fromAccount()!.badge; as badge) {
+              <skit-badge [tone]="badge.tone">{{ badge.text }}</skit-badge>
+            }
+          </skit-account-card>
+        }
+        @if (loading() || !toAccount()) {
+          <skit-account-card slot="to" name="" number="" currency="USD" [loading]="loading()" />
+        } @else {
+          <skit-account-card
+            slot="to"
+            [name]="toAccount()!.name"
+            [number]="toAccount()!.number"
+            [icon]="toAccount()!.icon"
+            [balance]="toDecimal(toAccount()!.balance)"
+            [projectedBalance]="projection()?.to"
+            currency="USD"
+          >
+            @if (toAccount()!.badge; as badge) {
+              <skit-badge [tone]="badge.tone">{{ badge.text }}</skit-badge>
+            }
+          </skit-account-card>
+        }
+      </skit-money-flow>
+    </section>
+    <skit-insured-notice />
+  </div>
+
+  <div
+    slot="actions"
+    class="skit:flex skit:items-center skit:gap-3 skit:lg:justify-end"
+  >
+    <!-- Mobile: one action takes the full bar, two share it equally. Desktop: natural widths, right-aligned. -->
+    @switch (step()) {
+      @case ('details') {
+        <skit-button type="submit" form="transfer-form" size="lg" class="skit:max-lg:flex-1">
+          Review transfer <skit-icon name="arrow-right" size="sm" />
+        </skit-button>
+      }
+      @case ('done') {
+        <skit-button variant="outline" size="lg" class="skit:max-lg:flex-1">
+          <skit-icon name="download" size="sm" /> Receipt
+        </skit-button>
+        <skit-button size="lg" class="skit:max-lg:flex-1" (click)="startOver()">New transfer</skit-button>
+      }
+      @default {
+        @if (step() === 'sending') {
+          <span
+            class="skit:mr-auto skit:flex skit:items-center skit:gap-2 skit:text-body-sm skit:text-muted skit:max-lg:hidden"
+          >
+            <skit-spinner size="sm" label="Sending your transfer" /> Sending…
+          </span>
+        }
+        <skit-button variant="ghost" size="lg" class="skit:max-lg:flex-1" [disabled]="step() === 'sending'" (click)="back()">
+          <skit-icon name="arrow-left" size="sm" /> Edit
+        </skit-button>
+        <skit-button size="lg" class="skit:max-lg:flex-1" [loading]="step() === 'sending'" (click)="confirm()">
+          <skit-icon name="send" size="sm" />
+          <span class="skit:lg:hidden">Confirm</span>
+          <span class="skit:max-lg:hidden">Confirm and send</span>
+        </skit-button>
+      }
+    }
+  </div>
+
+  <div slot="footer">
+    <app-how-panel class="skit:mt-8" />
+    <skit-site-footer>
+      <a slot="links" href="#">Privacy</a>
+      <a slot="links" href="#">Security</a>
+      <a slot="links" href="#">Accessibility</a>
+      <a slot="links" href="#">Contact us</a>
+      <a slot="links" href="#">Help center</a>
+      <skit-insured-notice slot="notice" variant="short" />
+      <p>
+        Routing number 256074974 · Equal Housing Lender · Equal Opportunity Employer, including
+        disability/vets · NMLS ID 399807
+      </p>
+      <p>Navy Federal conducts all member business in English.</p>
+      <p>
+        Concept demo built with skit, an Angular UI kit. Not affiliated with or endorsed by Navy
+        Federal Credit Union. Sample data only; no real accounts or money.
+      </p>
+    </skit-site-footer>
+  </div>
+</skit-split-page>

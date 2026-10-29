@@ -1,0 +1,26 @@
+<main class="skit:mx-auto skit:max-w-3xl skit:p-8">
+  <h1>skit demo</h1>
+  <p>
+    Plain tags pick up kit styles under <code>.skit-root</code>. Preset
+    <strong>{{ preset() }}</strong>, mode <strong>{{ mode() }}</strong>.
+    <a href="https://angular.dev">A link</a>.
+  </p>
+
+  <section class="skit:rounded-lg skit:border skit:bg-surface skit:p-6">
+    <h2>Surface</h2>
+    <p class="skit:text-body-sm skit:text-muted">Card on the page background, 1px border, no shadow.</p>
+    <span class="skit:rounded-full skit:bg-tint skit:px-3 skit:py-1 skit:text-label skit:text-tint">Tint</span>
+  </section>
+
+  <div class="skit:mt-6 skit:flex skit:flex-wrap skit:gap-3">
+    <skit-button [loading]="sending()" (click)="send()"><skit-icon name="send" size="sm" /> Send $84.20</skit-button>
+    <skit-button variant="secondary">Request</skit-button>
+    <skit-button variant="outline">Details</skit-button>
+    <skit-button variant="ghost" aria-label="More actions"><skit-icon name="more" /></skit-button>
+    <skit-button variant="danger">Freeze card</skit-button>
+  </div>
+
+  <hr />
+  <p class="skit:text-caption skit:text-muted skit:tabular-nums">+$3,200.00 · -$84.20</p>
+  <router-outlet />
+</main>

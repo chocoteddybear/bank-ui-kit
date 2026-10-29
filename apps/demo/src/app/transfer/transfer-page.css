@@ -1,0 +1,39 @@
+.app-wordmark {
+  color: var(--skit-tint-text);
+  font-weight: var(--skit-font-weight-semibold);
+  letter-spacing: -0.01em;
+}
+
+/* Skip link: hidden until it gets keyboard focus, then shown over the header. */
+.app-skip {
+  position: absolute;
+  top: calc(var(--skit-spacing) * 2);
+  left: calc(var(--skit-spacing) * 2);
+  z-index: 10;
+  padding: calc(var(--skit-spacing) * 2) calc(var(--skit-spacing) * 4);
+  border-radius: var(--skit-radius-sm);
+  background: var(--skit-surface);
+  color: var(--skit-link);
+  font-weight: var(--skit-font-weight-medium);
+  transform: translateY(-200%);
+}
+
+.app-skip:focus {
+  transform: none;
+  outline: var(--skit-focus-ring-width) solid var(--skit-focus-ring-color);
+  outline-offset: var(--skit-focus-ring-offset);
+}
+
+/* Targets of programmatic focus (skip link, step change): not in the tab order, so no ring. */
+.app-main:focus,
+.app-step-title:focus {
+  outline: none;
+}
+
+.app-disclosures {
+  display: flex;
+  flex-direction: column;
+  gap: var(--skit-spacing);
+  padding-inline-start: calc(var(--skit-spacing) * 4);
+  list-style: disc;
+}

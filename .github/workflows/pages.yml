@@ -1,0 +1,64 @@
+name: Pages
+
+on:
+  push:
+    branches: [demo]
+  workflow_dispatch:
+
+# Pages swaps the whole site in at once, so a newer push may safely cancel an older deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build demo and Storybook
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build library
+        run: pnpm --filter @vladlev/skit build
+
+      # Pages serves the site from /<repo>/, not from /.
+      - name: Build demo
+        run: pnpm --filter ./apps/demo exec ng build --base-href "/${{ github.event.repository.name }}/"
+
+      - name: Build Storybook
+        run: pnpm --filter @vladlev/skit build-storybook
+
+      - name: Assemble site
+        run: |
+          mkdir site
+          cp -r apps/demo/dist/demo/browser/. site/
+          cp -r packages/ui/storybook-static site/storybook
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,16 @@
+@import '@angular/cdk/a11y-prebuilt.css';
+@import '@vladlev/skit/fonts.css';
+@import '@vladlev/skit/tailwind.css';
+@import './themes/navy-federal.css';
+@source '../node_modules/@vladlev/skit';
+
+:where(:root) {
+  --app-accent: var(--skit-primary-400);
+  --app-masthead: var(--skit-primary-900);
+}
+
+body {
+  margin: 0;
+  /* Brand accent stripe across the top of the page (demo chrome, not a kit style). */
+  border-top: 4px solid var(--app-accent);
+}

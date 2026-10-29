@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.app-how-summary {
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--skit-radius-lg);
+}
+
+.app-how-summary::-webkit-details-marker {
+  display: none;
+}
+
+.app-how-summary:focus-visible {
+  outline: var(--skit-focus-ring-width) solid var(--skit-focus-ring-color);
+  outline-offset: var(--skit-focus-ring-offset);
+}
+
+/* The kit has no mono token yet (planned with the card number field), so the demo uses the system stack. */
+.app-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

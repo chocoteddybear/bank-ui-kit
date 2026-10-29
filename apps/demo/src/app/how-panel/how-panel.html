@@ -1,0 +1,15 @@
+<details class="app-how skit:rounded-lg skit:border skit:bg-surface">
+  <summary class="app-how-summary skit:flex skit:items-center skit:gap-3 skit:p-5 skit:text-subtitle">
+    How skit is applied to this page
+    <skit-badge tone="primary">3 steps</skit-badge>
+  </summary>
+  <ol class="skit:m-0 skit:flex skit:list-none skit:flex-col skit:gap-6 skit:px-5 skit:pb-6">
+    @for (step of steps; track step.title; let i = $index) {
+      <li class="skit:m-0">
+        <h3 class="skit:mb-1 skit:text-label">{{ i + 1 }}. {{ step.title }}</h3>
+        <p class="skit:mb-3 skit:text-body-sm skit:text-muted">{{ step.text }}</p>
+        <pre class="app-code skit:m-0 skit:overflow-x-auto skit:rounded-md skit:border skit:bg-background skit:p-4 skit:text-caption"><code>{{ step.code }}</code></pre>
+      </li>
+    }
+  </ol>
+</details>

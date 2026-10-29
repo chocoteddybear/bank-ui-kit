@@ -1,0 +1,36 @@
+/*
+ * Token bridge: Navy Federal's brand mapped onto skit variables. This file is the whole integration;
+ * no kit component changes. Values sampled from navyfederal.org (their "cmdr" design tokens):
+ * brand-primary #0f3d70, brand-tertiary #0667ba (links, focus), brand-secondary #ed780f (accent).
+ * On <html>, because skit role tokens resolve where data-primary/data-theme are declared.
+ */
+[data-brand='navy-federal'] {
+  --nfcu-navy-50: #f0f8ff;
+  --nfcu-navy-100: #dceefe;
+  --nfcu-navy-200: #cce7ff;
+  --nfcu-navy-300: #9fd0fb;
+  --nfcu-navy-400: #71b9f8;
+  --nfcu-navy-500: #2f8ad6;
+  --nfcu-navy-600: #0667ba;
+  --nfcu-navy-700: #0559a1;
+  --nfcu-navy-800: #144881;
+  --nfcu-navy-900: #0f3d70;
+  --nfcu-navy-950: #0a2647;
+  --nfcu-orange: #ed780f;
+
+  --skit-primary-50: var(--nfcu-navy-50);
+  --skit-primary-100: var(--nfcu-navy-100);
+  --skit-primary-200: var(--nfcu-navy-200);
+  --skit-primary-300: var(--nfcu-navy-300);
+  --skit-primary-400: var(--nfcu-navy-400);
+  --skit-primary-500: var(--nfcu-navy-500);
+  --skit-primary-600: var(--nfcu-navy-600);
+  --skit-primary-700: var(--nfcu-navy-700);
+  --skit-primary-800: var(--nfcu-navy-800);
+  --skit-primary-900: var(--nfcu-navy-900);
+  --skit-primary-950: var(--nfcu-navy-950);
+
+  /* Demo chrome only (header stripe), never inside kit components. */
+  --app-accent: var(--nfcu-orange);
+  --app-masthead: var(--nfcu-navy-900);
+}
